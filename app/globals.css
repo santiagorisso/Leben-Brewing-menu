@@ -76,8 +76,10 @@
 }
 
 @theme inline {
-  /* optional: --font-sans, --font-serif, --font-mono if they are applied in the layout.tsx */
-  --font-sans: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  /* Font families for the menu */
+  --font-sans: "Helvetica", "Arial", sans-serif;
+  --font-sans-condensed: "Helvetica Condensed", "Helvetica", "Arial", sans-serif;
+  --font-sans-light: "Helvetica Light", "Helvetica", "Arial", sans-serif;
   --font-display: "Knockout", "Impact", sans-serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -127,10 +129,145 @@
   }
 }
 
-/* Knockout font face for display titles */
+/* Letter spacing utilities for Knockout font */
+.font-display {
+  letter-spacing: 0.05em;
+}
+
+.font-display-tight {
+  letter-spacing: 0.02em;
+}
+
+.font-display-wide {
+  letter-spacing: 0.08em;
+}
+
+/* Font family utilities */
+.font-sans-condensed {
+  font-family: var(--font-sans-condensed);
+}
+
+.font-sans-light {
+  font-family: var(--font-sans-light);
+}
+
+/* Knockout font faces for display titles */
 @font-face {
   font-family: "Knockout";
-  src: url("/fonts/knockout.woff2") format("woff2");
-  font-weight: 400 700;
+  src: url("/fonts/Knockout-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Knockout";
+  src: url("/fonts/Knockout-HTF26-JuniorFlyweight.otf") format("opentype");
+  font-weight: 200;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Knockout";
+  src: url("/fonts/Knockout-HTF27-JuniorBantamwt.otf") format("opentype");
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Knockout";
+  src: url("/fonts/Knockout-HTF28-JuniorFeatherwt.otf") format("opentype");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Knockout";
+  src: url("/fonts/Knockout-HTF29-JuniorLiteweight.otf") format("opentype");
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Knockout";
+  src: url("/fonts/Knockout-HTF30-JuniorWelterwt.otf") format("opentype");
+  font-weight: 600;
+  font-display: swap;
+}
+
+/* Helvetica font faces for body text */
+@font-face {
+  font-family: "Helvetica";
+  src: url("/fonts/FreeSans.otf") format("opentype");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Helvetica";
+  src: url("/fonts/FreeSansBold.otf") format("opentype");
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Helvetica";
+  src: url("/fonts/FreeSansOblique.otf") format("opentype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Helvetica";
+  src: url("/fonts/FreeSansBoldOblique.otf") format("opentype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Helvetica Condensed for compact text */
+@font-face {
+  font-family: "Helvetica Condensed";
+  src: url("/fonts/Helvetica Condensed Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Helvetica Condensed";
+  src: url("/fonts/Helvetica Bold Condensed.otf") format("opentype");
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Helvetica Condensed";
+  src: url("/fonts/Helvetica Condensed Oblique.otf") format("opentype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Helvetica Condensed";
+  src: url("/fonts/Helvetica Condensed Bold Oblique.otf") format("opentype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Helvetica Light for subtle text */
+@font-face {
+  font-family: "Helvetica Light";
+  src: url("/fonts/helvetica-light.ttf") format("truetype");
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Helvetica Light";
+  src: url("/fonts/Helvetica-LightOblique.ttf") format("truetype");
+  font-weight: 300;
+  font-style: italic;
   font-display: swap;
 }

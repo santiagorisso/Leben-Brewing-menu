@@ -9,6 +9,12 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  // Disable tracing to fix Windows permission issues
+  experimental: {
+    instrumentationHook: false,
+  },
+  // Disable telemetry
+  telemetry: false,
 }
 
 export default nextConfig

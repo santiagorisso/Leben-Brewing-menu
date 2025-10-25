@@ -1,5 +1,5 @@
 // Mock menu data - will be replaced with Supabase Storage data
-import type { MenuData } from "./types"
+import type { MenuData } from "./types";
 
 export const mockMenuData: MenuData = {
   categories: [
@@ -7,6 +7,7 @@ export const mockMenuData: MenuData = {
       id: "beers",
       name: "Beers",
       slug: "beers",
+      description: "Craft beers brewed with passion and traditional methods",
       order: "a0",
       items: [
         {
@@ -45,6 +46,8 @@ export const mockMenuData: MenuData = {
       id: "pizzas",
       name: "Pizzas",
       slug: "pizzas",
+      description:
+        "Artisan pizzas made with fresh ingredients and traditional techniques",
       order: "a1",
       items: [
         {
@@ -74,11 +77,39 @@ export const mockMenuData: MenuData = {
           order: "a2",
         },
       ],
+      subcategories: [
+        {
+          id: "pizzas-de-molde",
+          name: "DE MOLDE",
+          slug: "de-molde",
+          description: "Daily special pizzas with unique combinations",
+          order: "a0",
+          items: [
+            {
+              id: "pizza-molde-1",
+              name: "Pizza del Día",
+              description: "Today's special creation by our chef",
+              price: 22,
+              available: true,
+              order: "a0",
+            },
+            {
+              id: "pizza-molde-2",
+              name: "Pizza Especial",
+              description: "Weekly rotating special ingredients",
+              price: 24,
+              available: true,
+              order: "a1",
+            },
+          ],
+        },
+      ],
     },
     {
       id: "wines",
       name: "Wines",
       slug: "wines",
+      description: "Carefully selected wines from renowned vineyards",
       order: "a2",
       items: [
         {
@@ -105,6 +136,8 @@ export const mockMenuData: MenuData = {
       id: "cocktails",
       name: "Cocktails",
       slug: "cocktails",
+      description:
+        "Craft cocktails made with premium spirits and fresh ingredients",
       order: "a3",
       items: [
         {
@@ -125,6 +158,94 @@ export const mockMenuData: MenuData = {
         },
       ],
     },
+    {
+      id: "para-picar",
+      name: "Para Picar",
+      slug: "para-picar",
+      description: "Small plates and appetizers perfect for sharing",
+      order: "a4",
+      items: [
+        {
+          id: "picar-1",
+          name: "Patatas Bravas",
+          description: "Crispy potatoes with spicy tomato sauce and aioli",
+          price: 8,
+          available: true,
+          vegetarian: true,
+          order: "a0",
+        },
+        {
+          id: "picar-2",
+          name: "Jamón Ibérico",
+          description: "Premium cured ham served with bread",
+          price: 18,
+          available: true,
+          order: "a1",
+        },
+      ],
+    },
+    {
+      id: "empanadas",
+      name: "Empanadas",
+      slug: "empanadas",
+      description: "Traditional Argentine empanadas with various fillings",
+      order: "a5",
+      items: [
+        {
+          id: "empanada-1",
+          name: "Carne",
+          description: "Ground beef with onions, olives, and hard-boiled egg",
+          price: 6,
+          available: true,
+          order: "a0",
+        },
+        {
+          id: "empanada-2",
+          name: "Pollo",
+          description: "Chicken with bell peppers and spices",
+          price: 6,
+          available: true,
+          order: "a1",
+        },
+        {
+          id: "empanada-3",
+          name: "Vegetariana",
+          description: "Spinach, cheese, and vegetables",
+          price: 5,
+          available: true,
+          vegetarian: true,
+          order: "a2",
+        },
+      ],
+    },
+    {
+      id: "sandwich",
+      name: "Sandwich",
+      slug: "sandwich",
+      description:
+        "Artisan sandwiches made with fresh bread and quality ingredients",
+      order: "a6",
+      items: [
+        {
+          id: "sandwich-1",
+          name: "Club Sandwich",
+          description:
+            "Turkey, bacon, lettuce, tomato, and mayo on toasted bread",
+          price: 14,
+          available: true,
+          order: "a0",
+        },
+        {
+          id: "sandwich-2",
+          name: "Veggie Deluxe",
+          description: "Avocado, hummus, sprouts, and vegetables",
+          price: 12,
+          available: true,
+          vegetarian: true,
+          order: "a1",
+        },
+      ],
+    },
   ],
   lastUpdated: new Date().toISOString(),
-}
+};
