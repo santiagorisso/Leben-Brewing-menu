@@ -1,9 +1,15 @@
 // Menu data types based on requirements
 
+export interface TextStyle {
+  bold?: boolean;
+  italic?: boolean;
+}
+
 export interface MenuItem {
   id: string;
   name: string;
   description?: string;
+  sideNote?: string; // Optional side note for small clarifications
   price?: number;
   glassPrice?: number; // For wines
   bottlePrice?: number; // For wines
@@ -13,6 +19,11 @@ export interface MenuItem {
   abv?: number; // For beers
   imageUrl?: string;
   order: string; // Fractional index for ordering
+  subcategoryId?: string; // For items belonging to subcategories
+  // Text style options
+  titleStyle?: TextStyle;
+  descriptionStyle?: TextStyle;
+  sideNoteStyle?: TextStyle;
 }
 
 export interface MenuCategory {
@@ -23,6 +34,9 @@ export interface MenuCategory {
   items: MenuItem[];
   subcategories?: MenuSubcategory[];
   order: string; // Fractional index for ordering
+  // Text style options
+  titleStyle?: TextStyle;
+  descriptionStyle?: TextStyle;
 }
 
 export interface MenuSubcategory {
@@ -32,6 +46,9 @@ export interface MenuSubcategory {
   description?: string;
   items: MenuItem[];
   order: string; // Fractional index for ordering
+  // Text style options
+  titleStyle?: TextStyle;
+  descriptionStyle?: TextStyle;
 }
 
 export interface MenuData {

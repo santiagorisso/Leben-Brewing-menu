@@ -44,6 +44,9 @@ export function DraggableItem({
       <div className="flex-1">
         <div className="flex items-center gap-2">
           <span className="font-semibold text-foreground">{item.name}</span>
+          {item.sideNote && (
+            <span className="text-xs text-muted">{item.sideNote}</span>
+          )}
           {item.vegetarian && (
             <span className="rounded bg-accent/20 px-1.5 py-0.5 text-xs font-semibold uppercase text-accent">
               V

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { MenuCategory, MenuSubcategory } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,7 +13,15 @@ import {
   DialogTitle,
   DialogFooter,
 } from "@/components/ui/dialog";
-import { GripVertical, Plus, Pencil, Trash2 } from "lucide-react";
+import {
+  GripVertical,
+  Plus,
+  Pencil,
+  Trash2,
+  Bold,
+  Italic,
+  X,
+} from "lucide-react";
 import { generateKeyBetween, sortByOrder } from "@/lib/fractional-index";
 import { cn } from "@/lib/utils";
 
@@ -354,6 +362,11 @@ function CategoryDialog({
 }: CategoryDialogProps) {
   const [formData, setFormData] = useState(category);
 
+  // Update form data when category prop changes to fix stale state bug
+  useEffect(() => {
+    setFormData(category);
+  }, [category.id]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSave(formData);
@@ -375,9 +388,68 @@ function CategoryDialog({
     });
   };
 
+  const handleStyleToggle = (
+    field: "titleStyle" | "descriptionStyle",
+    property: "bold" | "italic",
+    value: boolean
+  ) => {
+    setFormData({
+      ...formData,
+      [field]: {
+        ...formData[field],
+        [property]: value,
+      },
+    });
+  };
+
+  const handleAddSubcategory = () => {
+    const newSubcategory = {
+      id: `subcategory-${Date.now()}`,
+      name: "",
+      slug: "",
+      description: "",
+      items: [],
+      order: `a${formData.subcategories?.length || 0}`,
+    };
+    setFormData({
+      ...formData,
+      subcategories: [...(formData.subcategories || []), newSubcategory],
+    });
+  };
+
+  const handleDeleteSubcategory = (subcategoryId: string) => {
+    setFormData({
+      ...formData,
+      subcategories:
+        formData.subcategories?.filter((sub) => sub.id !== subcategoryId) || [],
+    });
+  };
+
+  const handleSubcategoryChange = (
+    subcategoryId: string,
+    field: "name" | "slug" | "description",
+    value: string
+  ) => {
+    setFormData({
+      ...formData,
+      subcategories:
+        formData.subcategories?.map((sub) => {
+          if (sub.id === subcategoryId) {
+            if (field === "name") {
+              // Auto-generate slug from name
+              const slug = generateSlug(value);
+              return { ...sub, name: value, slug };
+            }
+            return { ...sub, [field]: value };
+          }
+          return sub;
+        }) || [],
+    });
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md">
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
             {category.name ? "Edit Category" : "Add New Category"}
@@ -427,6 +499,193 @@ function CategoryDialog({
             <p className="text-xs text-muted">
               This description will be displayed below the category title in
               italic Helvetica font.
+            </p>
+          </div>
+
+          {/* Title Style */}
+          <div className="space-y-2">
+            <Label>Title Style</Label>
+            <div className="flex gap-2">
+              <Button
+                type="button"
+                variant={formData.titleStyle?.bold ? "default" : "outline"}
+                size="sm"
+                onClick={() =>
+                  handleStyleToggle(
+                    "titleStyle",
+                    "bold",
+                    !formData.titleStyle?.bold
+                  )
+                }
+              >
+                <Bold className="h-4 w-4" />
+              </Button>
+              <Button
+                type="button"
+                variant={formData.titleStyle?.italic ? "default" : "outline"}
+                size="sm"
+                onClick={() =>
+                  handleStyleToggle(
+                    "titleStyle",
+                    "italic",
+                    !formData.titleStyle?.italic
+                  )
+                }
+              >
+                <Italic className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+
+          {/* Description Style */}
+          <div className="space-y-2">
+            <Label>Description Style</Label>
+            <div className="flex gap-2">
+              <Button
+                type="button"
+                variant={
+                  formData.descriptionStyle?.bold ? "default" : "outline"
+                }
+                size="sm"
+                onClick={() =>
+                  handleStyleToggle(
+                    "descriptionStyle",
+                    "bold",
+                    !formData.descriptionStyle?.bold
+                  )
+                }
+              >
+                <Bold className="h-4 w-4" />
+              </Button>
+              <Button
+                type="button"
+                variant={
+                  formData.descriptionStyle?.italic ? "default" : "outline"
+                }
+                size="sm"
+                onClick={() =>
+                  handleStyleToggle(
+                    "descriptionStyle",
+                    "italic",
+                    !formData.descriptionStyle?.italic
+                  )
+                }
+              >
+                <Italic className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+
+          {/* Subcategories */}
+          <div className="space-y-3 border-t border-border pt-4">
+            <div className="flex items-center justify-between">
+              <Label>Subcategories</Label>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={handleAddSubcategory}
+              >
+                <Plus className="h-4 w-4 mr-1" />
+                Add Subcategory
+              </Button>
+            </div>
+
+            {formData.subcategories && formData.subcategories.length > 0 && (
+              <div className="space-y-3">
+                {formData.subcategories.map((subcategory) => (
+                  <div
+                    key={subcategory.id}
+                    className="rounded-lg border border-border p-3 space-y-2 bg-muted/20"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium">
+                        {subcategory.name || "New Subcategory"}
+                      </span>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDeleteSubcategory(subcategory.id)}
+                        className="h-6 w-6 p-0 text-destructive hover:text-destructive"
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="space-y-1">
+                        <Label
+                          htmlFor={`subcat-name-${subcategory.id}`}
+                          className="text-xs"
+                        >
+                          Name *
+                        </Label>
+                        <Input
+                          id={`subcat-name-${subcategory.id}`}
+                          value={subcategory.name}
+                          onChange={(e) =>
+                            handleSubcategoryChange(
+                              subcategory.id,
+                              "name",
+                              e.target.value
+                            )
+                          }
+                          placeholder="e.g., A LA PIEDRA"
+                          className="h-8 text-sm"
+                          required
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <Label
+                          htmlFor={`subcat-slug-${subcategory.id}`}
+                          className="text-xs"
+                        >
+                          Slug
+                        </Label>
+                        <Input
+                          id={`subcat-slug-${subcategory.id}`}
+                          value={subcategory.slug}
+                          onChange={(e) =>
+                            handleSubcategoryChange(
+                              subcategory.id,
+                              "slug",
+                              e.target.value
+                            )
+                          }
+                          placeholder="Auto-generated from name"
+                          className="h-8 text-sm"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <Label
+                          htmlFor={`subcat-desc-${subcategory.id}`}
+                          className="text-xs"
+                        >
+                          Description (Optional)
+                        </Label>
+                        <Textarea
+                          id={`subcat-desc-${subcategory.id}`}
+                          value={subcategory.description || ""}
+                          onChange={(e) =>
+                            handleSubcategoryChange(
+                              subcategory.id,
+                              "description",
+                              e.target.value
+                            )
+                          }
+                          placeholder="Optional description"
+                          className="h-16 text-sm"
+                          rows={2}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+            <p className="text-xs text-muted">
+              Items in this category can be assigned to subcategories when
+              adding/editing them.
             </p>
           </div>
 

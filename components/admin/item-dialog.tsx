@@ -1,38 +1,105 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState, useEffect } from "react"
-import type { MenuItem } from "@/lib/types"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Checkbox } from "@/components/ui/checkbox"
+import { useState, useEffect } from "react";
+import type { MenuItem, MenuCategory, TextStyle } from "@/lib/types";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Bold, Italic } from "lucide-react";
 
 interface ItemDialogProps {
-  item: MenuItem
-  categorySlug: string
-  open: boolean
-  onOpenChange: (open: boolean) => void
-  onSave: (item: MenuItem) => void
+  item: MenuItem;
+  categorySlug: string;
+  category?: MenuCategory;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onSave: (item: MenuItem) => void;
 }
 
-export function ItemDialog({ item, categorySlug, open, onOpenChange, onSave }: ItemDialogProps) {
-  const [formData, setFormData] = useState(item)
+export function ItemDialog({
+  item,
+  categorySlug,
+  category,
+  open,
+  onOpenChange,
+  onSave,
+}: ItemDialogProps) {
+  const [formData, setFormData] = useState(item);
 
   useEffect(() => {
-    setFormData(item)
-  }, [item])
+    setFormData(item);
+  }, [item]);
 
-  const isBeer = categorySlug === "beers"
-  const isWine = categorySlug === "wines"
+  const isBeer = categorySlug === "beers";
+  const isWine = categorySlug === "wines";
+  const isPizza = categorySlug === "pizzas";
+
+  // Get available subcategories for pizza category
+  const subcategories = category?.subcategories || [];
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    onSave(formData)
-  }
+    e.preventDefault();
+    onSave(formData);
+  };
+
+  const handleStyleToggle = (
+    field: "titleStyle" | "descriptionStyle" | "sideNoteStyle",
+    property: "bold" | "italic",
+    value: boolean
+  ) => {
+    setFormData({
+      ...formData,
+      [field]: {
+        ...formData[field],
+        [property]: value,
+      },
+    });
+  };
+
+  const StyleToggleButtons = ({
+    field,
+    label,
+  }: {
+    field: "titleStyle" | "descriptionStyle" | "sideNoteStyle";
+    label: string;
+  }) => (
+    <div className="space-y-2">
+      <Label>{label} Style</Label>
+      <div className="flex gap-2">
+        <Button
+          type="button"
+          variant={formData[field]?.bold ? "default" : "outline"}
+          size="sm"
+          onClick={() =>
+            handleStyleToggle(field, "bold", !formData[field]?.bold)
+          }
+        >
+          <Bold className="h-4 w-4" />
+        </Button>
+        <Button
+          type="button"
+          variant={formData[field]?.italic ? "default" : "outline"}
+          size="sm"
+          onClick={() =>
+            handleStyleToggle(field, "italic", !formData[field]?.italic)
+          }
+        >
+          <Italic className="h-4 w-4" />
+        </Button>
+      </div>
+    </div>
+  );
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -48,7 +115,9 @@ export function ItemDialog({ item, categorySlug, open, onOpenChange, onSave }: I
               <Input
                 id="name"
                 value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
                 required
               />
             </div>
@@ -61,7 +130,12 @@ export function ItemDialog({ item, categorySlug, open, onOpenChange, onSave }: I
                   type="number"
                   step="0.01"
                   value={formData.price || ""}
-                  onChange={(e) => setFormData({ ...formData, price: Number.parseFloat(e.target.value) })}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      price: Number.parseFloat(e.target.value),
+                    })
+                  }
                   required={!isWine}
                 />
               </div>
@@ -76,7 +150,12 @@ export function ItemDialog({ item, categorySlug, open, onOpenChange, onSave }: I
                     type="number"
                     step="0.01"
                     value={formData.glassPrice || ""}
-                    onChange={(e) => setFormData({ ...formData, glassPrice: Number.parseFloat(e.target.value) })}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        glassPrice: Number.parseFloat(e.target.value),
+                      })
+                    }
                   />
                 </div>
                 <div className="space-y-2">
@@ -86,7 +165,12 @@ export function ItemDialog({ item, categorySlug, open, onOpenChange, onSave }: I
                     type="number"
                     step="0.01"
                     value={formData.bottlePrice || ""}
-                    onChange={(e) => setFormData({ ...formData, bottlePrice: Number.parseFloat(e.target.value) })}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        bottlePrice: Number.parseFloat(e.target.value),
+                      })
+                    }
                   />
                 </div>
               </>
@@ -98,10 +182,58 @@ export function ItemDialog({ item, categorySlug, open, onOpenChange, onSave }: I
             <Textarea
               id="description"
               value={formData.description || ""}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, description: e.target.value })
+              }
               rows={3}
             />
+            <StyleToggleButtons field="descriptionStyle" label="Description" />
           </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="sideNote">Side Note</Label>
+            <Input
+              id="sideNote"
+              value={formData.sideNote || ""}
+              onChange={(e) =>
+                setFormData({ ...formData, sideNote: e.target.value })
+              }
+              placeholder="e.g., + dip, Gluten Free"
+            />
+            <StyleToggleButtons field="sideNoteStyle" label="Side Note" />
+          </div>
+
+          {/* Subcategory selector for Pizzas */}
+          {isPizza && (
+            <div className="space-y-2">
+              <Label htmlFor="subcategory">Subcategory *</Label>
+              {subcategories.length > 0 ? (
+                <select
+                  id="subcategory"
+                  value={formData.subcategoryId || ""}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      subcategoryId: e.target.value || undefined,
+                    })
+                  }
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  required
+                >
+                  <option value="">Select a subcategory</option>
+                  {subcategories.map((subcat) => (
+                    <option key={subcat.id} value={subcat.id}>
+                      {subcat.name}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <div className="text-sm text-muted">No subcategories available. Please add subcategories to this category.</div>
+              )}
+            </div>
+          )}
+
+          <StyleToggleButtons field="titleStyle" label="Title" />
 
           {isBeer && (
             <div className="grid gap-4 md:grid-cols-2">
@@ -111,7 +243,12 @@ export function ItemDialog({ item, categorySlug, open, onOpenChange, onSave }: I
                   id="ibu"
                   type="number"
                   value={formData.ibu || ""}
-                  onChange={(e) => setFormData({ ...formData, ibu: Number.parseInt(e.target.value) })}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      ibu: Number.parseInt(e.target.value),
+                    })
+                  }
                 />
               </div>
               <div className="space-y-2">
@@ -121,7 +258,12 @@ export function ItemDialog({ item, categorySlug, open, onOpenChange, onSave }: I
                   type="number"
                   step="0.1"
                   value={formData.abv || ""}
-                  onChange={(e) => setFormData({ ...formData, abv: Number.parseFloat(e.target.value) })}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      abv: Number.parseFloat(e.target.value),
+                    })
+                  }
                 />
               </div>
             </div>
@@ -131,7 +273,9 @@ export function ItemDialog({ item, categorySlug, open, onOpenChange, onSave }: I
             <Checkbox
               id="vegetarian"
               checked={formData.vegetarian || false}
-              onCheckedChange={(checked) => setFormData({ ...formData, vegetarian: checked as boolean })}
+              onCheckedChange={(checked) =>
+                setFormData({ ...formData, vegetarian: checked as boolean })
+              }
             />
             <Label htmlFor="vegetarian" className="cursor-pointer">
               Vegetarian
@@ -142,7 +286,9 @@ export function ItemDialog({ item, categorySlug, open, onOpenChange, onSave }: I
             <Checkbox
               id="available"
               checked={formData.available}
-              onCheckedChange={(checked) => setFormData({ ...formData, available: checked as boolean })}
+              onCheckedChange={(checked) =>
+                setFormData({ ...formData, available: checked as boolean })
+              }
             />
             <Label htmlFor="available" className="cursor-pointer">
               Available
@@ -150,7 +296,11 @@ export function ItemDialog({ item, categorySlug, open, onOpenChange, onSave }: I
           </div>
 
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => onOpenChange(false)}
+            >
               Cancel
             </Button>
             <Button type="submit">Save Item</Button>
@@ -158,5 +308,5 @@ export function ItemDialog({ item, categorySlug, open, onOpenChange, onSave }: I
         </form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

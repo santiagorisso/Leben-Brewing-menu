@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { MenuCategory, MenuItem } from "@/lib/types";
 import { DraggableItem } from "./draggable-item";
 import { generateKeyBetween, sortByOrder } from "@/lib/fractional-index";
@@ -20,6 +20,11 @@ export function CategoryEditor({ category, onUpdate }: CategoryEditorProps) {
   const [items, setItems] = useState(category.items);
   const [editingItem, setEditingItem] = useState<MenuItem | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  // Update local state when category prop changes to prevent stale state
+  useEffect(() => {
+    setItems(category.items);
+  }, [category.id]);
 
   const handleDragStart = (e: React.DragEvent, index: number) => {
     e.dataTransfer.effectAllowed = "move";
@@ -178,6 +183,7 @@ export function CategoryEditor({ category, onUpdate }: CategoryEditorProps) {
         <ItemDialog
           item={editingItem}
           categorySlug={category.slug}
+          category={category}
           open={isDialogOpen}
           onOpenChange={setIsDialogOpen}
           onSave={handleSaveItem}

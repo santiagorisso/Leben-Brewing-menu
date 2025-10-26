@@ -10,6 +10,19 @@ export function MenuItem({ item, categorySlug }: MenuItemProps) {
   const isBeer = categorySlug === "beers";
   const isWine = categorySlug === "wines";
 
+  // Determine text color based on availability
+  const textColor = item.available ? "text-white" : "text-muted";
+
+  // Helper function to get style classes based on TextStyle
+  const getStyleClasses = (
+    style: { bold?: boolean; italic?: boolean } | undefined
+  ) => {
+    const classes = [];
+    if (style?.bold) classes.push("font-bold");
+    if (style?.italic) classes.push("italic");
+    return classes.join(" ");
+  };
+
   return (
     <div className="relative py-6 text-center md:py-8">
       {!item.available && (
@@ -26,11 +39,24 @@ export function MenuItem({ item, categorySlug }: MenuItemProps) {
 
       {/* Item Content */}
       <div className="space-y-2">
-        {/* Name and Vegetarian Badge */}
+        {/* Name, Side Note, and Vegetarian Badge */}
         <div className="flex items-center justify-center gap-2">
-          <h3 className="font-display text-2xl font-bold uppercase tracking-wide text-foreground">
+          <h3
+            className={`font-item-title ${textColor} ${getStyleClasses(
+              item.titleStyle
+            )}`}
+          >
             {item.name}
           </h3>
+          {item.sideNote && (
+            <span
+              className={`font-side-note ${textColor} ${getStyleClasses(
+                item.sideNoteStyle
+              )}`}
+            >
+              {item.sideNote}
+            </span>
+          )}
           {item.vegetarian && (
             <Image
               src="/images/veggie.png"
@@ -44,30 +70,40 @@ export function MenuItem({ item, categorySlug }: MenuItemProps) {
 
         {/* Beer Stats - IBU and ABV on same line */}
         {isBeer && (item.ibu || item.abv) && (
-          <div className="flex items-center justify-center gap-3 text-sm text-foreground/80 font-display">
+          <div
+            className={`flex items-center justify-center gap-3 text-sm font-knockout-full ${textColor}`}
+          >
             {item.ibu && <span>IBU: {item.ibu}</span>}
             {item.abv && <span>ABV: {item.abv}</span>}
           </div>
         )}
 
-        {/* Description - gray and italicized */}
+        {/* Description - white when available, gray when sold out */}
         {item.description && (
-          <p className="mx-auto max-w-2xl text-sm italic leading-relaxed text-muted font-sans whitespace-pre-line">
+          <p
+            className={`mx-auto max-w-2xl font-item-description ${textColor} ${getStyleClasses(
+              item.descriptionStyle
+            )} whitespace-pre-line`}
+          >
             {item.description}
           </p>
         )}
 
-        {/* Pricing - bright orange, centered */}
+        {/* Pricing - formatted with $ and .– */}
         <div className="pt-2">
           {isWine && item.glassPrice && item.bottlePrice ? (
-            <div className="flex items-center justify-center gap-2 text-lg font-semibold font-display font-display-tight">
-              <span className="text-accent">copa ${item.glassPrice}</span>
-              <span className="text-muted">/</span>
-              <span className="text-accent">botella ${item.bottlePrice}</span>
+            <div className="flex items-center justify-center gap-2">
+              <span className={`font-price font-bold ${textColor}`}>
+                copa ${item.glassPrice}.–
+              </span>
+              <span className={textColor}>/</span>
+              <span className={`font-price font-bold ${textColor}`}>
+                botella ${item.bottlePrice}.–
+              </span>
             </div>
           ) : (
-            <span className="text-2xl font-bold text-accent font-display font-display-tight">
-              ${item.price}
+            <span className={`font-price font-bold ${textColor}`}>
+              ${item.price}.–
             </span>
           )}
         </div>
