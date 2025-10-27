@@ -16,7 +16,7 @@ interface CategoryEditorProps {
 }
 
 export function CategoryEditor({ category, onUpdate }: CategoryEditorProps) {
-  const [expanded, setExpanded] = useState(true);
+  const [expanded, setExpanded] = useState(false);
   const [items, setItems] = useState(category.items);
   const [editingItem, setEditingItem] = useState<MenuItem | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);

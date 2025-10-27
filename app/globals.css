@@ -153,54 +153,107 @@
   font-style: italic;
 }
 
-/* Category titles: Knockout-FullLiteweight, 46.5pt, uppercase */
+/* Category titles: Knockout-FullLiteweight, larger and bold */
 .font-category-title {
   font-family: "Knockout-FullLiteweight", "Impact", sans-serif;
-  font-size: 62px; /* 46.5pt ≈ 62px */
+  font-size: 72px; /* Adjusted for better visibility */
+  font-weight: bold;
   text-transform: uppercase;
   line-height: 1.1;
+  letter-spacing: 0.05em;
 }
 
-/* Item titles: Knockout-FullLiteweight, 24.5pt, uppercase */
+/* Item titles: Knockout-FullLiteweight, medium size */
 .font-item-title {
   font-family: "Knockout-FullLiteweight", "Impact", sans-serif;
-  font-size: 33px; /* 24.5pt ≈ 33px */
+  font-size: 28px; /* Reduced slightly for better proportion */
   text-transform: uppercase;
   line-height: 1.2;
+  letter-spacing: 0.03em;
 }
 
-/* Item descriptions: Helvetica-Oblique, 9pt */
+/* Subcategory titles: Larger than item titles for better visibility */
+.font-subcategory-title {
+  font-family: "Knockout-FullLiteweight", "Impact", sans-serif;
+  font-size: 36px; /* Larger for better visibility */
+  text-transform: uppercase;
+  line-height: 1.2;
+  letter-spacing: 0.03em;
+}
+
+/* Item descriptions: Helvetica-Oblique, smaller italic text */
 .font-item-description {
   font-family: "Helvetica-Oblique", "Helvetica", sans-serif;
-  font-size: 12px; /* 9pt ≈ 12px */
+  font-size: 13px; /* Increased to be more readable */
   font-style: italic;
-  line-height: 1.4;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
 }
 
-/* Category descriptions: Helvetica-Oblique, slightly larger for readability */
+/* Bold text inside descriptions */
+.font-item-description b {
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* Larger description on mobile for better readability */
+@media (max-width: 768px) {
+  .font-item-description {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+}
+
+/* All item descriptions now use the same base size */
+
+/* Category descriptions: Helvetica-Oblique, medium italic */
 .font-category-description {
   font-family: "Helvetica-Oblique", "Helvetica", sans-serif;
-  font-size: 14px; /* Increased from 12px for better readability */
+  font-size: 22px; /* Increased to be more like H3 relative to H1 title */
   font-style: italic;
   color: #ffffff;
-  line-height: 1.4;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
 }
 
-/* Prices: Helvetica-Oblique, 12.5pt */
+/* Bold text inside category descriptions */
+.font-category-description b {
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* Larger category descriptions on mobile for better readability */
+@media (max-width: 768px) {
+  .font-category-description {
+    font-size: 18px;
+  }
+}
+
+/* Prices: Helvetica-Bold Oblique, bold and white */
 .font-price {
-  font-family: "Helvetica-Oblique", "Helvetica", sans-serif;
-  font-size: 17px; /* 12.5pt ≈ 17px */
+  font-family: "Helvetica-Bold Oblique", "Helvetica", sans-serif;
+  font-size: 18px;
   font-style: italic;
+  font-weight: 700;
+  color: #ffffff; /* White for prices */
   line-height: 1.2;
+  letter-spacing: 0.05em;
 }
 
-/* Side note: Helvetica-Oblique, 25.5px, white */
+/* Greyed out prices for unavailable items */
+.font-price.text-muted {
+  color: rgb(100, 100, 100); /* Grey color for unavailable items */
+}
+
+/* Side note: Helvetica Condensed, medium size */
 .font-side-note {
-  font-family: "Helvetica-Oblique", "Helvetica", sans-serif;
-  font-size: 25.5px;
-  font-style: italic;
+  font-family: "Helvetica Condensed", "Helvetica", "Arial", sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
   color: #ffffff;
   line-height: 1.2;
+  letter-spacing: 0.02em;
 }
 
 /* Font family utilities */
@@ -215,15 +268,35 @@
 /* Knockout font faces for display titles */
 @font-face {
   font-family: "Knockout-FullLiteweight";
-  src: url("/fonts/Knockout-FullLiteweight.otf") format("opentype");
+  src: url("/fonts/Knockout-FullLiteweight.woff2") format("woff2"),
+    url("/fonts/Knockout-FullLiteweight.woff") format("woff");
   font-weight: 400;
+  font-style: normal;
   font-display: swap;
 }
 
 @font-face {
   font-family: "Helvetica-Oblique";
-  src: url("/fonts/Helvetica-Oblique.ttf") format("truetype");
+  src: url("/fonts/Helvetica-Oblique.woff2") format("woff2"),
+    url("/fonts/Helvetica-Oblique.woff") format("woff");
   font-weight: 400;
   font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Helvetica-Bold Oblique";
+  src: url("/fonts/Helvetica-Bold Oblique.ttf") format("truetype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Helvetica Condensed";
+  src: url("/fonts/helvetica_condensed.woff2") format("woff2"),
+    url("/fonts/helvetica_condensed.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
   font-display: swap;
 }

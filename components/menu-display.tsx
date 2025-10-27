@@ -48,9 +48,18 @@ export function MenuDisplay({ data }: MenuDisplayProps) {
 
       {/* Menu Content */}
       <div className="mx-auto max-w-3xl px-4 py-8 md:py-12">
-        <div className="space-y-20 md:space-y-24">
-          {sortedCategories.map((category) => (
-            <MenuSection key={category.id} category={category} />
+        <div className="space-y-12 md:space-y-16">
+          {sortedCategories.map((category, index) => (
+            <div
+              key={category.id}
+              className={`pb-6 md:pb-10 ${
+                index < sortedCategories.length - 1
+                  ? "border-b border-white"
+                  : ""
+              }`}
+            >
+              <MenuSection category={category} />
+            </div>
           ))}
         </div>
       </div>

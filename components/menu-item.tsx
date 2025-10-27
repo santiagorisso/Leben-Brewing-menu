@@ -7,8 +7,11 @@ interface MenuItemProps {
 }
 
 export function MenuItem({ item, categorySlug }: MenuItemProps) {
-  const isBeer = categorySlug === "beers";
-  const isWine = categorySlug === "wines";
+  const isBeer = categorySlug === "cervezas" || categorySlug === "beers";
+  const isWine = categorySlug === "vinos" || categorySlug === "wines";
+  const isEmpanadas = categorySlug === "empanadas";
+  const isParaPicar =
+    categorySlug === "para-picar" || categorySlug === "para picar";
 
   // Determine text color based on availability
   const textColor = item.available ? "text-white" : "text-muted";
@@ -24,7 +27,7 @@ export function MenuItem({ item, categorySlug }: MenuItemProps) {
   };
 
   return (
-    <div className="relative py-6 text-center md:py-8">
+    <div className="relative py-3 text-center md:py-4">
       {!item.available && (
         <div className="absolute inset-0 z-10 flex items-center justify-center">
           <Image
@@ -38,7 +41,7 @@ export function MenuItem({ item, categorySlug }: MenuItemProps) {
       )}
 
       {/* Item Content */}
-      <div className="space-y-2">
+      <div className="space-y-1">
         {/* Name, Side Note, and Vegetarian Badge */}
         <div className="flex items-center justify-center gap-2">
           <h3
@@ -49,20 +52,31 @@ export function MenuItem({ item, categorySlug }: MenuItemProps) {
             {item.name}
           </h3>
           {item.sideNote && (
-            <span
-              className={`font-side-note ${textColor} ${getStyleClasses(
-                item.sideNoteStyle
-              )}`}
-            >
-              {item.sideNote}
-            </span>
+            <>
+              {item.showPlusBeforeSideNote && (
+                <span
+                  className={`font-side-note ${textColor} ${getStyleClasses(
+                    item.sideNoteStyle
+                  )}`}
+                >
+                  +
+                </span>
+              )}
+              <span
+                className={`font-side-note ${textColor} ${getStyleClasses(
+                  item.sideNoteStyle
+                )}`}
+              >
+                {item.sideNote}
+              </span>
+            </>
           )}
           {item.vegetarian && (
             <Image
               src="/images/veggie.png"
               alt="Vegetarian"
-              width={20}
-              height={20}
+              width={16}
+              height={16}
               className="shrink-0"
             />
           )}
@@ -72,6 +86,7 @@ export function MenuItem({ item, categorySlug }: MenuItemProps) {
         {isBeer && (item.ibu || item.abv) && (
           <div
             className={`flex items-center justify-center gap-3 text-sm font-knockout-full ${textColor}`}
+            style={{ marginTop: "-0.25rem" }}
           >
             {item.ibu && <span>IBU: {item.ibu}</span>}
             {item.abv && <span>ABV: {item.abv}</span>}
@@ -81,30 +96,31 @@ export function MenuItem({ item, categorySlug }: MenuItemProps) {
         {/* Description - white when available, gray when sold out */}
         {item.description && (
           <p
-            className={`mx-auto max-w-2xl font-item-description ${textColor} ${getStyleClasses(
+            className={`mx-auto max-w-2xl font-item-description ${
+              isBeer ? "beer-description" : ""
+            } ${isEmpanadas ? "empanadas-description" : ""} ${
+              isParaPicar ? "para-picar-description" : ""
+            } ${textColor} ${getStyleClasses(
               item.descriptionStyle
-            )} whitespace-pre-line`}
-          >
-            {item.description}
-          </p>
+            )} whitespace-pre-line pt-0.5 pb-1`}
+            dangerouslySetInnerHTML={{ __html: item.description }}
+          />
         )}
 
         {/* Pricing - formatted with $ and .– */}
-        <div className="pt-2">
+        <div className="pt-1">
           {isWine && item.glassPrice && item.bottlePrice ? (
             <div className="flex items-center justify-center gap-2">
-              <span className={`font-price font-bold ${textColor}`}>
+              <span className={`font-price ${textColor}`}>
                 copa ${item.glassPrice}.–
               </span>
               <span className={textColor}>/</span>
-              <span className={`font-price font-bold ${textColor}`}>
+              <span className={`font-price ${textColor}`}>
                 botella ${item.bottlePrice}.–
               </span>
             </div>
           ) : (
-            <span className={`font-price font-bold ${textColor}`}>
-              ${item.price}.–
-            </span>
+            <span className={`font-price ${textColor}`}>${item.price}.–</span>
           )}
         </div>
       </div>

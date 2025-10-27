@@ -8,6 +8,10 @@ interface MenuSectionProps {
 
 export function MenuSection({ category }: MenuSectionProps) {
   const sortedItems = sortByOrder(category.items);
+  const isBeersCategory =
+    category.slug === "cervezas" || category.slug === "beers";
+  const isTragosCategory =
+    category.slug === "tragos" || category.slug === "drinks";
 
   const sortedSubcategories = category.subcategories
     ? sortByOrder(category.subcategories)
@@ -41,9 +45,9 @@ export function MenuSection({ category }: MenuSectionProps) {
   return (
     <section
       id={category.slug}
-      className="space-y-8 scroll-mt-16 md:scroll-mt-32"
+      className="space-y-6 scroll-mt-16 md:scroll-mt-32"
     >
-      <div className="text-center space-y-4">
+      <div className="text-center space-y-2">
         <h2
           className={`font-category-title text-foreground ${getStyleClasses(
             category.titleStyle
@@ -55,22 +59,29 @@ export function MenuSection({ category }: MenuSectionProps) {
           <p
             className={`mx-auto max-w-2xl font-category-description text-white ${getStyleClasses(
               category.descriptionStyle
-            )} whitespace-pre-line`}
-          >
-            {category.description}
-          </p>
+            )} whitespace-pre-line pt-1 pb-3`}
+            dangerouslySetInnerHTML={{ __html: category.description }}
+          />
         )}
       </div>
 
       {/* Show items without subcategory first */}
       {itemsWithoutSubcategory.length > 0 && (
-        <div className="space-y-0">
+        <div
+          className={
+            isTragosCategory
+              ? "grid grid-cols-2 gap-3 max-w-5xl mx-auto"
+              : "space-y-0"
+          }
+        >
           {itemsWithoutSubcategory.map((item, index) => (
             <div key={item.id}>
               <MenuItem item={item} categorySlug={category.slug} />
-              {index < itemsWithoutSubcategory.length - 1 && (
-                <div className="h-px bg-white mx-auto max-w-2xl" />
-              )}
+              {isBeersCategory &&
+                !isTragosCategory &&
+                index < itemsWithoutSubcategory.length - 1 && (
+                  <div className="h-px bg-white mx-auto max-w-2xl" />
+                )}
             </div>
           ))}
         </div>
@@ -83,10 +94,10 @@ export function MenuSection({ category }: MenuSectionProps) {
         if (subcategoryItems.length === 0) return null;
 
         return (
-          <div key={subcategory.id} className="space-y-6">
-            <div className="text-center space-y-2">
+          <div key={subcategory.id} className="space-y-4 mt-8">
+            <div className="text-center space-y-1">
               <h3
-                className={`font-item-title text-foreground ${getStyleClasses(
+                className={`font-subcategory-title text-foreground ${getStyleClasses(
                   subcategory.titleStyle
                 )}`}
               >
@@ -97,19 +108,26 @@ export function MenuSection({ category }: MenuSectionProps) {
                   className={`mx-auto max-w-xl font-item-description text-white ${getStyleClasses(
                     subcategory.descriptionStyle
                   )} whitespace-pre-line`}
-                >
-                  {subcategory.description}
-                </p>
+                  dangerouslySetInnerHTML={{ __html: subcategory.description }}
+                />
               )}
             </div>
 
-            <div className="space-y-0">
+            <div
+              className={
+                isTragosCategory
+                  ? "grid grid-cols-2 gap-3 max-w-5xl mx-auto"
+                  : "space-y-0"
+              }
+            >
               {sortByOrder(subcategoryItems).map((item, index) => (
                 <div key={item.id}>
                   <MenuItem item={item} categorySlug={category.slug} />
-                  {index < subcategoryItems.length - 1 && (
-                    <div className="h-px bg-white mx-auto max-w-2xl" />
-                  )}
+                  {isBeersCategory &&
+                    !isTragosCategory &&
+                    index < subcategoryItems.length - 1 && (
+                      <div className="h-px bg-white mx-auto max-w-2xl" />
+                    )}
                 </div>
               ))}
             </div>

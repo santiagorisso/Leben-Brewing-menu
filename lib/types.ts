@@ -10,6 +10,7 @@ export interface MenuItem {
   name: string;
   description?: string;
   sideNote?: string; // Optional side note for small clarifications
+  showPlusBeforeSideNote?: boolean; // Show "+" before side note for alignment
   price?: number;
   glassPrice?: number; // For wines
   bottlePrice?: number; // For wines

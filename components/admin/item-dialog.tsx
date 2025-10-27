@@ -186,7 +186,11 @@ export function ItemDialog({
                 setFormData({ ...formData, description: e.target.value })
               }
               rows={3}
+              placeholder='Use <b>text</b> for bold, e.g., "Classic with <b>ground beef</b>"'
             />
+            <p className="text-xs text-muted-foreground">
+              Use &lt;b&gt;text&lt;/b&gt; to make specific words bold
+            </p>
             <StyleToggleButtons field="descriptionStyle" label="Description" />
           </div>
 
@@ -198,9 +202,28 @@ export function ItemDialog({
               onChange={(e) =>
                 setFormData({ ...formData, sideNote: e.target.value })
               }
-              placeholder="e.g., + dip, Gluten Free"
+              placeholder="e.g., dip, Gluten Free"
             />
             <StyleToggleButtons field="sideNoteStyle" label="Side Note" />
+
+            <div className="flex items-center space-x-2 mt-2">
+              <Checkbox
+                id="showPlusBeforeSideNote"
+                checked={formData.showPlusBeforeSideNote || false}
+                onCheckedChange={(checked) =>
+                  setFormData({
+                    ...formData,
+                    showPlusBeforeSideNote: checked as boolean,
+                  })
+                }
+              />
+              <Label
+                htmlFor="showPlusBeforeSideNote"
+                className="cursor-pointer text-sm"
+              >
+                Show "+" before side note (for alignment)
+              </Label>
+            </div>
           </div>
 
           {/* Subcategory selector for Pizzas */}
@@ -228,7 +251,10 @@ export function ItemDialog({
                   ))}
                 </select>
               ) : (
-                <div className="text-sm text-muted">No subcategories available. Please add subcategories to this category.</div>
+                <div className="text-sm text-muted">
+                  No subcategories available. Please add subcategories to this
+                  category.
+                </div>
               )}
             </div>
           )}
