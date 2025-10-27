@@ -4,16 +4,17 @@ import type { MenuData } from "./types";
 export const mockMenuData: MenuData = {
   categories: [
     {
-      id: "beers",
-      name: "Beers",
-      slug: "beers",
-      description: "Craft beers brewed with passion and traditional methods",
+      id: "cervezas",
+      name: "Cervezas",
+      slug: "cervezas",
+      description:
+        "Cervezas artesanales elaboradas con pasión y métodos tradicionales",
       order: "a0",
       items: [
         {
           id: "beer-1",
           name: "Hazy IPA",
-          description: "Juicy and tropical with notes of mango and citrus",
+          description: "Tropical y jugosa con notas de mango y cítricos",
           price: 8,
           available: true,
           ibu: 45,
@@ -23,7 +24,7 @@ export const mockMenuData: MenuData = {
         {
           id: "beer-2",
           name: "Pilsner",
-          description: "Crisp and refreshing Czech-style lager",
+          description: "Crisp y refrescante estilo lager checo",
           price: 7,
           available: true,
           ibu: 35,
@@ -33,7 +34,7 @@ export const mockMenuData: MenuData = {
         {
           id: "beer-3",
           name: "Stout",
-          description: "Rich and creamy with chocolate and coffee notes",
+          description: "Rica y cremosa con notas de chocolate y café",
           price: 9,
           available: false,
           ibu: 40,
@@ -47,13 +48,13 @@ export const mockMenuData: MenuData = {
       name: "Pizzas",
       slug: "pizzas",
       description:
-        "Artisan pizzas made with fresh ingredients and traditional techniques",
+        "Pizzas artesanales elaboradas con ingredientes frescos y técnicas tradicionales",
       order: "a1",
       items: [
         {
           id: "pizza-1",
           name: "Margherita",
-          description: "San Marzano tomatoes, fresh mozzarella, basil",
+          description: "Tomates San Marzano, mozzarella fresca, albahaca",
           price: 16,
           available: true,
           vegetarian: true,
@@ -62,7 +63,7 @@ export const mockMenuData: MenuData = {
         {
           id: "pizza-2",
           name: "Pepperoni",
-          description: "Tomato sauce, mozzarella, spicy pepperoni",
+          description: "Salsa de tomate, mozzarella, pepperoni picante",
           price: 18,
           available: true,
           order: "a1",
@@ -70,7 +71,7 @@ export const mockMenuData: MenuData = {
         {
           id: "pizza-3",
           name: "Funghi",
-          description: "Wild mushrooms, truffle oil, parmesan, arugula",
+          description: "Hongos silvestres, aceite de trufa, parmesano, rúcula",
           price: 20,
           available: true,
           vegetarian: true,
@@ -82,7 +83,7 @@ export const mockMenuData: MenuData = {
           id: "pizzas-a-la-piedra",
           name: "A LA PIEDRA",
           slug: "a-la-piedra",
-          description: "Traditional stone-baked pizzas",
+          description: "Pizzas tradicionales horneadas en piedra",
           order: "a0",
           items: [],
         },
@@ -90,17 +91,17 @@ export const mockMenuData: MenuData = {
           id: "pizzas-de-molde",
           name: "DE MOLDE",
           slug: "de-molde",
-          description: "Pan pizzas with thick crust",
+          description: "Pizzas estilo molde con masa gruesa",
           order: "a1",
           items: [],
         },
       ],
     },
     {
-      id: "wines",
-      name: "Wines",
-      slug: "wines",
-      description: "Carefully selected wines from renowned vineyards",
+      id: "vinos",
+      name: "Vinos",
+      slug: "vinos",
+      description: "Vinos cuidadosamente seleccionados de reconocidas bodegas",
       order: "a2",
       items: [
         {
@@ -124,17 +125,17 @@ export const mockMenuData: MenuData = {
       ],
     },
     {
-      id: "cocktails",
-      name: "Cocktails",
-      slug: "cocktails",
+      id: "tragos",
+      name: "Tragos",
+      slug: "tragos",
       description:
-        "Craft cocktails made with premium spirits and fresh ingredients",
+        "Cocteles artesanales elaborados con destilados premium e ingredientes frescos",
       order: "a3",
       items: [
         {
           id: "cocktail-1",
           name: "Old Fashioned",
-          description: "Bourbon, bitters, sugar, orange peel",
+          description: "Bourbon, amargos, azúcar, piel de naranja",
           price: 14,
           available: true,
           order: "a0",
@@ -142,7 +143,7 @@ export const mockMenuData: MenuData = {
         {
           id: "cocktail-2",
           name: "Negroni",
-          description: "Gin, Campari, sweet vermouth",
+          description: "Gin, Campari, vermut dulce",
           price: 13,
           available: true,
           order: "a1",
@@ -150,16 +151,86 @@ export const mockMenuData: MenuData = {
       ],
     },
     {
+      id: "bebidas-sin-alcohol",
+      name: "Bebidas Sin Alcohol",
+      slug: "bebidas-sin-alcohol",
+      description: "Refrescantes bebidas sin alcohol para todos los gustos",
+      order: "a4",
+      items: [
+        {
+          id: "soft-1",
+          name: "Limonada Fresca",
+          description: "Limones frescos, menta y hielo",
+          price: 6,
+          available: true,
+          vegetarian: true,
+          order: "a0",
+        },
+        {
+          id: "soft-2",
+          name: "Jugo de Naranja",
+          description: "Exprimido al momento",
+          price: 5,
+          available: true,
+          vegetarian: true,
+          order: "a1",
+        },
+        {
+          id: "soft-3",
+          name: "Agua con Gas",
+          description: "Agua mineral con gas",
+          price: 4,
+          available: true,
+          vegetarian: true,
+          order: "a2",
+        },
+      ],
+    },
+    {
+      id: "latas",
+      name: "Latas",
+      slug: "latas",
+      description: "Cervezas y bebidas en lata para llevar",
+      order: "a5",
+      items: [
+        {
+          id: "lata-1",
+          name: "IPA Lata",
+          description: "Cerveza artesanal IPA en lata",
+          price: 8,
+          available: true,
+          order: "a0",
+        },
+        {
+          id: "lata-2",
+          name: "Pilsner Lata",
+          description: "Cerveza artesanal Pilsner en lata",
+          price: 7,
+          available: true,
+          order: "a1",
+        },
+        {
+          id: "lata-3",
+          name: "Gaseosa Cola",
+          description: "Refresco de cola en lata",
+          price: 3,
+          available: true,
+          vegetarian: true,
+          order: "a2",
+        },
+      ],
+    },
+    {
       id: "para-picar",
       name: "Para Picar",
       slug: "para-picar",
-      description: "Small plates and appetizers perfect for sharing",
-      order: "a4",
+      description: "Platos pequeños y aperitivos perfectos para compartir",
+      order: "a6",
       items: [
         {
           id: "picar-1",
           name: "Patatas Bravas",
-          description: "Crispy potatoes with spicy tomato sauce and aioli",
+          description: "Papas crujientes con salsa de tomate picante y alioli",
           price: 8,
           available: true,
           vegetarian: true,
@@ -168,7 +239,7 @@ export const mockMenuData: MenuData = {
         {
           id: "picar-2",
           name: "Jamón Ibérico",
-          description: "Premium cured ham served with bread",
+          description: "Jamón curado premium servido con pan",
           price: 18,
           available: true,
           order: "a1",
@@ -179,13 +250,13 @@ export const mockMenuData: MenuData = {
       id: "empanadas",
       name: "Empanadas",
       slug: "empanadas",
-      description: "Traditional Argentine empanadas with various fillings",
-      order: "a5",
+      description: "Empanadas argentinas tradicionales con diversos rellenos",
+      order: "a7",
       items: [
         {
           id: "empanada-1",
           name: "Carne",
-          description: "Ground beef with onions, olives, and hard-boiled egg",
+          description: "Carne molida con cebolla, aceitunas y huevo duro",
           price: 6,
           available: true,
           order: "a0",
@@ -193,7 +264,7 @@ export const mockMenuData: MenuData = {
         {
           id: "empanada-2",
           name: "Pollo",
-          description: "Chicken with bell peppers and spices",
+          description: "Pollo con morrones y especias",
           price: 6,
           available: true,
           order: "a1",
@@ -201,7 +272,7 @@ export const mockMenuData: MenuData = {
         {
           id: "empanada-3",
           name: "Vegetariana",
-          description: "Spinach, cheese, and vegetables",
+          description: "Espinaca, queso y verduras",
           price: 5,
           available: true,
           vegetarian: true,
@@ -214,14 +285,13 @@ export const mockMenuData: MenuData = {
       name: "Sandwich",
       slug: "sandwich",
       description:
-        "Artisan sandwiches made with fresh bread and quality ingredients",
-      order: "a6",
+        "Sándwiches artesanales elaborados con pan fresco e ingredientes de calidad",
+      order: "a8",
       items: [
         {
           id: "sandwich-1",
           name: "Club Sandwich",
-          description:
-            "Turkey, bacon, lettuce, tomato, and mayo on toasted bread",
+          description: "Pavo, bacon, lechuga, tomate y mayonesa en pan tostado",
           price: 14,
           available: true,
           order: "a0",
@@ -229,7 +299,7 @@ export const mockMenuData: MenuData = {
         {
           id: "sandwich-2",
           name: "Veggie Deluxe",
-          description: "Avocado, hummus, sprouts, and vegetables",
+          description: "Aguacate, hummus, brotes y verduras",
           price: 12,
           available: true,
           vegetarian: true,
@@ -238,5 +308,6 @@ export const mockMenuData: MenuData = {
       ],
     },
   ],
-  lastUpdated: new Date().toISOString(),
+  // Use a stable timestamp for mock data to prevent hydration mismatches
+  lastUpdated: "2024-01-01T00:00:00.000Z",
 };

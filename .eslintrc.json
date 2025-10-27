@@ -1,0 +1,30 @@
+{
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "rules": {
+    "react/no-unescaped-entities": "off",
+    "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+    "react-hooks/exhaustive-deps": "warn"
+  },
+  "overrides": [
+    {
+      "files": ["lib/**/*.ts", "app/**/*.tsx"],
+      "rules": {
+        "no-restricted-syntax": [
+          "error",
+          {
+            "selector": "CallExpression[callee.name='Date']",
+            "message": "Avoid using new Date() in data files to prevent hydration mismatches. Use a stable timestamp instead."
+          },
+          {
+            "selector": "CallExpression[callee.object.name='Math'][callee.property.name='random']",
+            "message": "Avoid using Math.random() in data files or during SSR to prevent hydration mismatches."
+          }
+        ]
+      }
+    }
+  ]
+}
