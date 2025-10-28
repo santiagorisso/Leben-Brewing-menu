@@ -12,6 +12,17 @@ export function MenuItem({ item, categorySlug }: MenuItemProps) {
   const isEmpanadas = categorySlug === "empanadas";
   const isParaPicar =
     categorySlug === "para-picar" || categorySlug === "para picar";
+  const isTragos = categorySlug === "tragos" || categorySlug === "drinks";
+
+  // Debug logging for TRAGOS items
+  if (isTragos) {
+    console.log(
+      "TRAGOS item detected:",
+      item.name,
+      "categorySlug:",
+      categorySlug
+    );
+  }
 
   // Determine text color based on availability
   const textColor = item.available ? "text-white" : "text-muted";
@@ -41,13 +52,30 @@ export function MenuItem({ item, categorySlug }: MenuItemProps) {
       )}
 
       {/* Item Content */}
-      <div className="space-y-1">
+      <div className={`${isWine ? "wine-item-content" : ""} space-y-1`}>
+        {/* Wine Type - displayed above wine name for wines */}
+        {isWine && item.wineType && (
+          <div className="text-center">
+            <span className={`font-wine-type ${textColor}`}>
+              {item.wineType}
+            </span>
+          </div>
+        )}
+
         {/* Name, Side Note, and Vegetarian Badge */}
-        <div className="flex items-center justify-center gap-2">
+        <div
+          className={`flex items-center justify-center gap-2 ${
+            isTragos ? "tragos-title-no-margin" : ""
+          }`}
+        >
           <h3
-            className={`font-item-title ${textColor} ${getStyleClasses(
-              item.titleStyle
-            )}`}
+            className={`${
+              isWine
+                ? "font-wine-title"
+                : isTragos
+                ? "font-tragos-title"
+                : "font-item-title"
+            } ${textColor} ${getStyleClasses(item.titleStyle)}`}
           >
             {item.name}
           </h3>
@@ -96,10 +124,14 @@ export function MenuItem({ item, categorySlug }: MenuItemProps) {
         {/* Description - white when available, gray when sold out */}
         {item.description && (
           <p
-            className={`mx-auto max-w-2xl font-item-description ${
-              isBeer ? "beer-description" : ""
-            } ${isEmpanadas ? "empanadas-description" : ""} ${
-              isParaPicar ? "para-picar-description" : ""
+            className={`mx-auto max-w-2xl ${
+              isTragos ? "font-tragos-description" : "font-item-description"
+            } ${isBeer ? "beer-description" : ""} ${
+              isEmpanadas ? "empanadas-description" : ""
+            } ${isParaPicar ? "para-picar-description" : ""} ${
+              isWine ? "wine-description-spacing" : ""
+            } ${
+              isTragos ? "tragos-description-no-padding" : ""
             } ${textColor} ${getStyleClasses(
               item.descriptionStyle
             )} whitespace-pre-line pt-0.5 pb-1`}
@@ -108,7 +140,7 @@ export function MenuItem({ item, categorySlug }: MenuItemProps) {
         )}
 
         {/* Pricing - formatted with $ and .– */}
-        <div className="pt-1">
+        <div className="pt-1 text-center">
           {isWine && item.glassPrice && item.bottlePrice ? (
             <div className="flex items-center justify-center gap-2">
               <span className={`font-price ${textColor}`}>
@@ -120,7 +152,13 @@ export function MenuItem({ item, categorySlug }: MenuItemProps) {
               </span>
             </div>
           ) : (
-            <span className={`font-price ${textColor}`}>${item.price}.–</span>
+            <span
+              className={`${
+                isTragos ? "font-tragos-price" : "font-price"
+              } ${textColor}`}
+            >
+              ${item.price}.–
+            </span>
           )}
         </div>
       </div>

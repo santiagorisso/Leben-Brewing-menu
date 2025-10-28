@@ -256,6 +256,74 @@
   letter-spacing: 0.02em;
 }
 
+/* Wine-specific styling */
+.font-wine-title {
+  font-family: "Knockout-FullLiteweight", "Impact", sans-serif;
+  font-size: 36px; /* Larger than regular item titles */
+  text-transform: uppercase;
+  line-height: 1.1;
+  letter-spacing: 0.03em;
+  font-weight: bold; /* Make it more prominent */
+}
+
+.font-wine-type {
+  font-family: "Helvetica-Oblique", "Helvetica", sans-serif;
+  font-size: 16px; /* Keep current size as requested */
+  font-style: italic;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+}
+
+/* Wine item spacing for better layout */
+.wine-item-content {
+  text-align: center;
+}
+
+.wine-description-spacing {
+  margin-bottom: 0.5rem; /* Reduced spacing between description and prices */
+}
+
+/* Tragos-specific styling for two-column layout */
+.font-tragos-title {
+  font-family: "Knockout-FullLiteweight", "Impact", sans-serif;
+  font-size: 24px; /* Slightly smaller than regular item titles */
+  text-transform: uppercase;
+  line-height: 1.2;
+  letter-spacing: 0.03em;
+}
+
+.font-tragos-description {
+  font-family: "Helvetica-Oblique", "Helvetica", sans-serif;
+  font-size: 12px; /* Slightly smaller than regular descriptions */
+  font-style: italic;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+}
+
+.font-tragos-price {
+  font-family: "Helvetica-Bold Oblique", "Helvetica", sans-serif;
+  font-size: 16px; /* Slightly smaller than regular prices */
+  font-style: italic;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.2;
+  letter-spacing: 0.05em;
+}
+
+/* Greyed out prices for unavailable items in tragos */
+.font-tragos-price.text-muted {
+  color: rgb(100, 100, 100);
+}
+
+/* Tragos-specific spacing adjustments */
+.tragos-description-no-padding {
+  padding-top: 0 !important;
+}
+
+.tragos-title-no-margin {
+  margin-bottom: 0 !important;
+}
+
 /* Font family utilities */
 .font-sans-condensed {
   font-family: var(--font-sans-condensed);

@@ -13,6 +13,16 @@ export function MenuSection({ category }: MenuSectionProps) {
   const isTragosCategory =
     category.slug === "tragos" || category.slug === "drinks";
 
+  // Debug logging for TRAGOS category
+  if (category.slug === "tragos") {
+    console.log(
+      "TRAGOS category detected:",
+      category.slug,
+      "isTragosCategory:",
+      isTragosCategory
+    );
+  }
+
   const sortedSubcategories = category.subcategories
     ? sortByOrder(category.subcategories)
     : [];
@@ -42,16 +52,22 @@ export function MenuSection({ category }: MenuSectionProps) {
     }
   });
 
+  const isParaPicar = category.slug === "para-picar";
+  const isPizzas = category.slug === "pizzas";
+  const isVinos = category.slug === "vinos" || category.slug === "wines";
+
   return (
     <section
       id={category.slug}
-      className="space-y-6 scroll-mt-16 md:scroll-mt-32"
+      className={`${isParaPicar ? "space-y-8 md:space-y-10" : "space-y-6"} ${
+        isVinos ? "bg-black text-white" : ""
+      } scroll-mt-16 md:scroll-mt-32`}
     >
-      <div className="text-center space-y-2">
+      <div className={`text-center ${isParaPicar ? "space-y-0" : "space-y-2"}`}>
         <h2
-          className={`font-category-title text-foreground ${getStyleClasses(
-            category.titleStyle
-          )}`}
+          className={`font-category-title ${
+            isVinos ? "text-white" : "text-foreground"
+          } ${getStyleClasses(category.titleStyle)}`}
         >
           {category.name}
         </h2>
@@ -59,7 +75,9 @@ export function MenuSection({ category }: MenuSectionProps) {
           <p
             className={`mx-auto max-w-2xl font-category-description text-white ${getStyleClasses(
               category.descriptionStyle
-            )} whitespace-pre-line pt-1 pb-3`}
+            )} whitespace-pre-line ${
+              isParaPicar ? "-mt-2 pb-6 md:pb-8" : "pt-1 pb-3"
+            }`}
             dangerouslySetInnerHTML={{ __html: category.description }}
           />
         )}
@@ -70,7 +88,7 @@ export function MenuSection({ category }: MenuSectionProps) {
         <div
           className={
             isTragosCategory
-              ? "grid grid-cols-2 gap-3 max-w-5xl mx-auto"
+              ? "grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 max-w-6xl mx-auto px-4"
               : "space-y-0"
           }
         >
@@ -88,16 +106,21 @@ export function MenuSection({ category }: MenuSectionProps) {
       )}
 
       {/* Show subcategories with their items */}
-      {sortedSubcategories.map((subcategory) => {
+      {sortedSubcategories.map((subcategory, index) => {
         const subcategoryItems = itemsBySubcategory.get(subcategory.id) || [];
 
         if (subcategoryItems.length === 0) return null;
 
+        const isFirstSubcategory = index === 0;
+        const marginTopClass = isPizzas && isFirstSubcategory ? "mt-2" : "mt-8";
+        const isDeMolde = subcategory.slug === "de-molde";
+        const fontSizeClass = isDeMolde ? "text-5xl" : "";
+
         return (
-          <div key={subcategory.id} className="space-y-4 mt-8">
+          <div key={subcategory.id} className={`space-y-4 ${marginTopClass}`}>
             <div className="text-center space-y-1">
               <h3
-                className={`font-subcategory-title text-foreground ${getStyleClasses(
+                className={`font-subcategory-title text-foreground ${fontSizeClass} ${getStyleClasses(
                   subcategory.titleStyle
                 )}`}
               >
@@ -116,7 +139,7 @@ export function MenuSection({ category }: MenuSectionProps) {
             <div
               className={
                 isTragosCategory
-                  ? "grid grid-cols-2 gap-3 max-w-5xl mx-auto"
+                  ? "grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 max-w-6xl mx-auto px-4"
                   : "space-y-0"
               }
             >

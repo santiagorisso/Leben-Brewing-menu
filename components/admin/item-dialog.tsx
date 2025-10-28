@@ -42,7 +42,7 @@ export function ItemDialog({
   }, [item]);
 
   const isBeer = categorySlug === "beers";
-  const isWine = categorySlug === "wines";
+  const isWine = categorySlug === "wines" || categorySlug === "vinos";
   const isPizza = categorySlug === "pizzas";
 
   // Get available subcategories for pizza category
@@ -172,6 +172,25 @@ export function ItemDialog({
                       })
                     }
                   />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="wineType">Wine Type *</Label>
+                  <select
+                    id="wineType"
+                    value={formData.wineType || ""}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        wineType: e.target.value as "Tinto" | "Blanco",
+                      })
+                    }
+                    required
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    <option value="">Select type</option>
+                    <option value="Tinto">Tinto (Red)</option>
+                    <option value="Blanco">Blanco (White)</option>
+                  </select>
                 </div>
               </>
             )}
