@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import type { MenuCategory } from "@/lib/types";
 import { getMenuData } from "@/lib/supabase-storage-client";
 import { sortByOrder } from "@/lib/fractional-index";
@@ -9,6 +10,10 @@ export function BackToTop() {
   const [isVisible, setIsVisible] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [categories, setCategories] = useState<MenuCategory[]>([]);
+  const pathname = usePathname();
+
+  // Hide in admin routes
+  const isAdminRoute = pathname?.startsWith("/admin") || false;
 
   useEffect(() => {
     const toggleVisibility = () => {
@@ -80,6 +85,11 @@ export function BackToTop() {
       setIsOpen(false);
     }
   };
+
+  // Don't show in admin routes
+  if (isAdminRoute) {
+    return null;
+  }
 
   if (!isVisible) {
     return null;

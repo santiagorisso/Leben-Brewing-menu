@@ -126,34 +126,127 @@
   body {
     @apply bg-background text-foreground;
     scroll-behavior: smooth;
+    /* Ensure fixed elements are relative to viewport, not body */
+    position: relative;
+  }
+  html {
+    /* Prevent any transforms on html that could break fixed positioning */
+    transform: none;
+    -webkit-transform: none;
   }
 }
 
-/* Infinite Text Slider Animations */
-@keyframes slide-left {
+/* Infinite Text Slider - Seamless Marquee Animation */
+:root {
+  --marquee-height: 2.5rem; /* 40px default, 48px on md screens */
+  --animation-duration: 24s;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --marquee-height: 3rem; /* 48px on desktop */
+  }
+}
+
+.infinite-text-slider {
+  display: flex;
+  align-items: center;
+  pointer-events: none; /* Allow clicks through when not interactive */
+  /* Ensure fixed positioning works on mobile and desktop */
+  position: fixed !important;
+  left: 0 !important;
+  right: 0 !important;
+  /* High z-index to stay above all content */
+  z-index: 9999 !important;
+  /* Mobile-specific fixes for fixed positioning */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  /* Prevent any parent transforms from affecting positioning */
+  isolation: isolate;
+}
+
+/* Top slider - always at top */
+.infinite-text-slider[data-position="top"] {
+  top: 0 !important;
+  bottom: auto !important;
+}
+
+/* Bottom slider - account for mobile browser bar */
+.infinite-text-slider[data-position="bottom"] {
+  top: auto !important;
+  bottom: env(safe-area-inset-bottom, 0) !important;
+}
+
+/* Mobile-specific: ensure bottom slider stays at viewport bottom */
+@media (max-width: 768px) {
+  .infinite-text-slider[data-position="bottom"] {
+    /* Force bottom alignment, accounting for browser UI */
+    /* Use calc to ensure it stays at viewport bottom */
+    bottom: calc(env(safe-area-inset-bottom, 0px)) !important;
+    /* Ensure fixed positioning persists */
+    position: fixed !important;
+  }
+}
+
+.infinite-text-slider-track {
+  display: flex;
+  width: 200%;
+  will-change: transform;
+}
+
+.infinite-text-slider-content {
+  flex: 0 0 50%;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+/* Left to right animation (default) - using CSS variable for duration */
+@keyframes marquee-scroll-left {
   0% {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-100%);
+    transform: translateX(-50%);
   }
 }
 
-@keyframes slide-right {
+/* Right to left animation */
+@keyframes marquee-scroll-right {
   0% {
-    transform: translateX(-100%);
+    transform: translateX(-50%);
   }
   100% {
     transform: translateX(0);
   }
 }
 
-.animate-slide-left {
-  animation: slide-left linear infinite;
+/* Animation classes - duration controlled by CSS variable */
+.marquee-animate-left {
+  animation: marquee-scroll-left linear infinite;
+  animation-duration: var(--animation-duration, 24s);
+  animation-fill-mode: none;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
 }
 
-.animate-slide-right {
-  animation: slide-right linear infinite;
+.marquee-animate-right {
+  animation: marquee-scroll-right linear infinite;
+  animation-duration: var(--animation-duration, 24s);
+  animation-fill-mode: none;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .infinite-text-slider-track,
+  .marquee-animate-left,
+  .marquee-animate-right {
+    animation: none !important;
+  }
 }
 
 /* Letter spacing utilities for Knockout font */
@@ -448,7 +541,7 @@
 /* <style for bg> ======== */
 .category-menu-background {
   position: fixed;
-  bottom: 2rem;
+  bottom: calc(2rem + var(--marquee-height, 2.5rem) + 0.5rem);
   right: 2rem;
   z-index: 50;
   border-radius: 16px;
@@ -462,6 +555,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@media (min-width: 768px) {
+  .category-menu-background {
+    bottom: calc(2rem + 3rem + 0.5rem);
+  }
 }
 
 /* <style for menu__icon> ======== */
@@ -525,6 +624,11 @@ body.dropdown-open nav {
   pointer-events: none;
 }
 
+body.dropdown-open .infinite-text-slider {
+  filter: blur(4px);
+  transition: filter 0.3s ease;
+}
+
 .category-menu-background,
 .category-dropdown {
   filter: none !important;
@@ -534,7 +638,7 @@ body.dropdown-open nav {
 /* Dropdown menu */
 .category-dropdown {
   position: fixed;
-  bottom: calc(2rem + 50px + 0.5rem);
+  bottom: calc(2rem + var(--marquee-height, 2.5rem) + 50px + 1rem);
   right: 2rem;
   z-index: 49;
   padding: 0.5rem;
@@ -542,7 +646,18 @@ body.dropdown-open nav {
   display: flex;
   flex-direction: column;
   gap: 0.375rem;
-  filter: none !important;
+}
+
+@media (min-width: 768px) {
+  .category-dropdown {
+    bottom: calc(2rem + 3rem + 50px + 1rem);
+  }
+}
+
+@media (max-width: 767px) {
+  .category-dropdown {
+    bottom: calc(2rem + 2.5rem + 50px + 1rem);
+  }
 }
 
 .category-dropdown-item {

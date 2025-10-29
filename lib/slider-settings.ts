@@ -14,6 +14,8 @@ export async function getSliderSettings(): Promise<SliderSettings | null> {
   try {
     const supabase = createBrowserClient();
 
+    // Fetch settings from Supabase Storage
+    // Supabase Storage automatically handles cache freshness
     const { data, error } = await supabase.storage
       .from(BUCKET_NAME)
       .download(SLIDER_SETTINGS_FILE);

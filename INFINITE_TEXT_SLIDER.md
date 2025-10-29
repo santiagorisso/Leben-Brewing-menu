@@ -2,7 +2,17 @@
 
 ## Overview
 
-The `InfiniteTextSlider` component displays persistent infinite horizontal scrolling text animations at the top and bottom edges of the menu layout. The content and visibility are controlled through the admin panel.
+The `InfiniteTextSlider` component displays **seamless infinite horizontal scrolling text animations** at the top and bottom edges of the menu layout. The animation uses a **duplicated-track technique** for truly infinite, seamless scrolling without visible restarts. The content and visibility are controlled through the admin panel.
+
+## Key Features
+
+✅ **Seamless Infinite Scrolling** - Uses duplicated-track technique (width: 200%, translate -50%)  
+✅ **Fixed Position** - Always visible at top and bottom edges  
+✅ **Accessibility** - Respects `prefers-reduced-motion`  
+✅ **Admin Controlled** - Toggle visibility and edit content via admin panel  
+✅ **HTML Support** - Safe rendering of formatted text (`<b>`, `<i>`, `<span>`)  
+✅ **Responsive** - Adapts to mobile and desktop viewports  
+✅ **Non-intrusive** - Uses `pointer-events: none` to allow clicks through
 
 ## Files Created
 
@@ -17,18 +27,20 @@ The `InfiniteTextSlider` component displays persistent infinite horizontal scrol
 
 The component has been integrated into `app/layout.tsx`:
 
-- **Top slider**: Fixed position at the top of the page
-- **Bottom slider**: Fixed position at the bottom of the page
-- **Spacing**: Added padding-top and padding-bottom to main content to prevent overlap
+- **Top slider**: Fixed position at the top of the page (`position: fixed; top: 0`)
+- **Bottom slider**: Fixed position at the bottom of the page (`position: fixed; bottom: 0`)
+- **Spacing**: Padding automatically matches slider height using CSS variable `--marquee-height`
 
 ```tsx
 <InfiniteTextSlider position="top" />
-<div className="pt-10 md:pt-12">
+<div className="pt-[2.5rem] md:pt-12">
   {children}
 </div>
 <InfiniteTextSlider position="bottom" />
-<div className="pb-10 md:pb-12" />
+<div className="pb-[2.5rem] md:pb-12" />
 ```
+
+**Important**: The padding values (`pt-[2.5rem] md:pt-12`) match the CSS variable `--marquee-height` to prevent content overlap.
 
 ### Admin Panel Integration
 
@@ -70,12 +82,49 @@ Settings are stored in Supabase Storage:
 }
 ```
 
-## Styling
+## Styling & Animation
+
+### Seamless Marquee Technique
+
+The slider uses a **duplicated-track technique** for seamless infinite scrolling:
+
+1. **Track Width**: `200%` (contains two copies)
+2. **Each Copy**: `50%` width (first and second identical content)
+3. **Animation**: Translates from `translateX(0)` to `translateX(-50%)`
+4. **Result**: When first copy scrolls out, second copy seamlessly continues
+
+### CSS Variables
+
+```css
+:root {
+  --marquee-height: 2.5rem; /* 40px mobile */
+}
+
+@media (min-width: 768px) {
+  :root {
+    --marquee-height: 3rem; /* 48px desktop */
+  }
+}
+```
+
+### Keyframe Animations
+
+```css
+@keyframes marquee-scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+```
 
 - Uses Tailwind CSS for layout and positioning
 - Custom CSS keyframe animations in `globals.css`
 - Fixed positioning to ensure always visible (unless disabled)
 - z-index: 40 (below dropdown menu z-50, above content)
+- `pointer-events: none` - Allows clicks through the slider
 
 ## HTML Formatting Support
 
@@ -115,6 +164,13 @@ The component uses:
 
 To change colors, modify the classes in `components/infinite-text-slider.tsx`.
 
+## Accessibility
+
+- **`aria-hidden="true"`**: Marked as decorative since content is duplicated
+- **`prefers-reduced-motion`**: Animation automatically disabled for users who prefer reduced motion
+- **Keyboard navigation**: Not affected (slider is non-interactive)
+- **Screen readers**: Content is accessible but marked decorative to avoid repetition
+
 ## Troubleshooting
 
 ### Slider Not Appearing
@@ -123,18 +179,26 @@ To change colors, modify the classes in `components/infinite-text-slider.tsx`.
 2. Verify text content is not empty
 3. Check browser console for errors
 4. Confirm Supabase Storage bucket `menu-assets` exists
+5. Verify CSS variable `--marquee-height` is defined in `globals.css`
 
-### Animation Not Smooth
+### Animation Not Smooth or Visible Restart
 
-- Ensure content is duplicated (component does this automatically)
-- Check animation duration (very fast durations may appear choppy)
-- Verify CSS animations are loaded in `globals.css`
+- ✅ **Fixed**: Component now uses duplicated-track technique (width: 200%, translate -50%)
+- Ensure animation duration is reasonable (10-60 seconds recommended)
+- Check that `will-change: transform` is applied (handled by CSS)
+- Verify no conflicting CSS is overriding the animation
 
 ### Text Not Formatting
 
 - Ensure HTML tags are properly closed
 - Check for syntax errors in HTML
 - Use `<span>` for custom colors, not inline styles directly on text
+
+### Content Overlapping
+
+- Verify padding in `app/layout.tsx` matches `--marquee-height`
+- On mobile: `pt-[2.5rem] pb-[2.5rem]` (matches 2.5rem height)
+- On desktop: `pt-12 pb-12` (matches 3rem height)
 
 ## Future Enhancements
 

@@ -70,7 +70,10 @@ export function SliderSettings() {
       const result = await saveSliderSettings(settings);
 
       if (result.success) {
-        showSuccess("Settings Saved", "Slider settings updated successfully!");
+        showSuccess(
+          "Changes saved successfully",
+          "Slider settings have been updated and will appear on the menu shortly."
+        );
       } else {
         showError("Save Error", result.error || "Failed to save settings.");
       }
