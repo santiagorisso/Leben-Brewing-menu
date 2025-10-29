@@ -76,7 +76,7 @@ export function MenuSection({ category }: MenuSectionProps) {
             className={`mx-auto max-w-2xl font-category-description text-white ${getStyleClasses(
               category.descriptionStyle
             )} whitespace-pre-line ${
-              isParaPicar ? "-mt-2 pb-6 md:pb-8" : "pt-1 pb-3"
+              isParaPicar ? "mt-[28px] pb-6 md:pb-8" : "pt-1 pb-3"
             }`}
             dangerouslySetInnerHTML={{ __html: category.description }}
           />

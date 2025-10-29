@@ -124,7 +124,7 @@ export function MenuItem({ item, categorySlug }: MenuItemProps) {
               isTragos ? "tragos-description-no-padding" : ""
             } ${textColor} ${getStyleClasses(
               item.descriptionStyle
-            )} whitespace-pre-line pt-0.5 pb-1`}
+            )} whitespace-pre-line pt-0 pb-1`}
             dangerouslySetInnerHTML={{ __html: item.description }}
           />
         )}
