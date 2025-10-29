@@ -170,7 +170,7 @@
 /* Top slider - always at top */
 .infinite-text-slider[data-position="top"] {
   top: 0 !important;
-  bottom: auto !important;
+  bottom: env(safe-area-inset-bottom, 0) !important;
 }
 
 /* Bottom slider - account for mobile browser bar */

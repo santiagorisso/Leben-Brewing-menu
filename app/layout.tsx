@@ -29,8 +29,8 @@ export default function RootLayout({
       <body className="font-sans antialiased">
         <InfiniteTextSlider position="top" />
         <div className="pt-[2.5rem] md:pt-12">{children}</div>
-        <InfiniteTextSlider position="bottom" />
         <div className="pb-[2.5rem] md:pb-12" />
+        <InfiniteTextSlider position="bottom" />
         <BackToTop />
         <Analytics />
       </body>

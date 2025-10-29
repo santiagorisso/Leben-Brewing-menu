@@ -195,10 +195,6 @@ export function InfiniteTextSlider({ position }: InfiniteTextSliderProps) {
       data-position={position}
       style={{
         height: "var(--marquee-height, 2.5rem)",
-        // Ensure mobile persistence with explicit positioning
-        position: "fixed",
-        top: position === "top" ? 0 : "auto",
-        bottom: position === "bottom" ? 0 : "auto",
         left: 0,
         right: 0,
         // High z-index to stay above scrolling content
