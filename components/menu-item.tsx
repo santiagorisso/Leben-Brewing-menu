@@ -14,16 +14,6 @@ export function MenuItem({ item, categorySlug }: MenuItemProps) {
     categorySlug === "para-picar" || categorySlug === "para picar";
   const isTragos = categorySlug === "tragos" || categorySlug === "drinks";
 
-  // Debug logging for TRAGOS items
-  if (isTragos) {
-    console.log(
-      "TRAGOS item detected:",
-      item.name,
-      "categorySlug:",
-      categorySlug
-    );
-  }
-
   // Determine text color based on availability
   const textColor = item.available ? "text-white" : "text-muted";
 

@@ -36,10 +36,10 @@ export function CategoryNav({
               key={category.id}
               onClick={() => handleCategoryClick(category.slug)}
               className={cn(
-                "rounded-lg border-2 px-4 py-6 text-center font-display text-lg font-bold uppercase tracking-wide transition-all md:px-6 md:py-4 md:text-xl",
+                "uiverse-button uiverse-button-category",
                 activeCategory === category.slug
-                  ? "border-accent bg-accent/10 text-accent"
-                  : "border-border text-foreground hover:border-accent/50 hover:bg-accent/5"
+                  ? "uiverse-button-accent"
+                  : "uiverse-button-primary"
               )}
             >
               {category.name}
