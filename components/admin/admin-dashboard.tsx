@@ -8,13 +8,14 @@ import { getMenuData } from "@/lib/supabase-storage-client";
 import type { MenuData } from "@/lib/types";
 import { MenuEditor } from "./menu-editor";
 import { CategoryManagement } from "./category-management";
+import { SliderSettings } from "./slider-settings";
 import { NotificationContainer, useNotifications } from "./notification";
 
 export function AdminDashboard() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [menuData, setMenuData] = useState<MenuData | null>(null);
-  const [activeTab, setActiveTab] = useState<"categories" | "items">(
+  const [activeTab, setActiveTab] = useState<"categories" | "items" | "slider">(
     "categories"
   );
   const { notifications, dismissNotification, showSuccess, showError } =
@@ -131,6 +132,16 @@ export function AdminDashboard() {
             >
               Menu Items
             </button>
+            <button
+              onClick={() => setActiveTab("slider")}
+              className={`flex-1 rounded-md px-3 py-2 text-sm font-medium transition-all ${
+                activeTab === "slider"
+                  ? "bg-background text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              Text Slider
+            </button>
           </div>
 
           {menuData ? (
@@ -162,6 +173,8 @@ export function AdminDashboard() {
                   }}
                 />
               )}
+
+              {activeTab === "slider" && <SliderSettings />}
             </>
           ) : (
             <div className="rounded-lg border border-border bg-card p-8 text-center">

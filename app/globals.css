@@ -129,6 +129,33 @@
   }
 }
 
+/* Infinite Text Slider Animations */
+@keyframes slide-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes slide-right {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-left {
+  animation: slide-left linear infinite;
+}
+
+.animate-slide-right {
+  animation: slide-right linear infinite;
+}
+
 /* Letter spacing utilities for Knockout font */
 .font-display {
   letter-spacing: 0.05em;

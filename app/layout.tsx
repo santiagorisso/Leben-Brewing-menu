@@ -2,6 +2,7 @@ import type React from "react";
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import { BackToTop } from "@/components/back-to-top";
+import { InfiniteTextSlider } from "@/components/infinite-text-slider";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -18,7 +19,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="font-sans antialiased">
-        {children}
+        <InfiniteTextSlider position="top" />
+        <div className="pt-10 md:pt-12">{children}</div>
+        <InfiniteTextSlider position="bottom" />
+        <div className="pb-10 md:pb-12" />
         <BackToTop />
         <Analytics />
       </body>
