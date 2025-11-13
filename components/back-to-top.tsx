@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { usePathname } from "next/navigation";
 import type { MenuCategory } from "@/lib/types";
 import { getMenuData } from "@/lib/supabase-storage-client";
@@ -9,11 +9,20 @@ import { sortByOrder } from "@/lib/fractional-index";
 export function BackToTop() {
   const [isVisible, setIsVisible] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
   const [categories, setCategories] = useState<MenuCategory[]>([]);
   const pathname = usePathname();
 
   // Hide in admin routes
   const isAdminRoute = pathname?.startsWith("/admin") || false;
+
+  const handleClose = useCallback(() => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsOpen(false);
+      setIsClosing(false);
+    }, 300); // Match animation duration
+  }, []);
 
   useEffect(() => {
     const toggleVisibility = () => {
@@ -21,7 +30,9 @@ export function BackToTop() {
         setIsVisible(true);
       } else {
         setIsVisible(false);
-        setIsOpen(false); // Close dropdown when scrolling back to top
+        if (isOpen) {
+          handleClose(); // Close dropdown when scrolling back to top
+        }
       }
     };
 
@@ -39,10 +50,10 @@ export function BackToTop() {
     return () => {
       window.removeEventListener("scroll", toggleVisibility);
     };
-  }, []);
+  }, [isOpen, handleClose]);
 
   useEffect(() => {
-    // Apply blur to body when dropdown is open
+    // Apply blur to body when dropdown is open (including during closing animation)
     if (isOpen) {
       document.body.classList.add("dropdown-open");
     } else {
@@ -54,15 +65,16 @@ export function BackToTop() {
       const target = event.target as HTMLElement;
       if (
         isOpen &&
+        !isClosing &&
         !target.closest(".category-menu-background") &&
         !target.closest(".category-dropdown") &&
         !target.closest(".category-menu-button")
       ) {
-        setIsOpen(false);
+        handleClose();
       }
     };
 
-    if (isOpen) {
+    if (isOpen && !isClosing) {
       // Delay to avoid immediate closing
       setTimeout(() => {
         document.addEventListener("click", handleClickOutside);
@@ -73,7 +85,7 @@ export function BackToTop() {
       document.removeEventListener("click", handleClickOutside);
       document.body.classList.remove("dropdown-open");
     };
-  }, [isOpen]);
+  }, [isOpen, isClosing]);
 
   const handleCategoryClick = (categorySlug: string) => {
     const element = document.getElementById(categorySlug);
@@ -82,7 +94,7 @@ export function BackToTop() {
         behavior: "smooth",
         block: "start",
       });
-      setIsOpen(false);
+      handleClose();
     }
   };
 
@@ -100,11 +112,17 @@ export function BackToTop() {
       {isOpen && (
         <div
           className="category-dropdown-backdrop"
-          onClick={() => setIsOpen(false)}
+          onClick={handleClose}
         />
       )}
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => {
+          if (isOpen) {
+            handleClose();
+          } else {
+            setIsOpen(true);
+          }
+        }}
         className="category-menu-button"
         aria-label="Category menu"
       >
@@ -118,7 +136,7 @@ export function BackToTop() {
       </button>
 
       {isOpen && (
-        <div className="category-dropdown">
+        <div className={`category-dropdown ${isClosing ? 'closing' : ''}`}>
           {categories.map((category) => (
             <button
               key={category.id}
