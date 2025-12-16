@@ -112,15 +112,16 @@ export function MenuSection({ category }: MenuSectionProps) {
         if (subcategoryItems.length === 0) return null;
 
         const isFirstSubcategory = index === 0;
-        const marginTopClass = isPizzas && isFirstSubcategory ? "mt-2" : "mt-8";
+        const marginTopClass = isPizzas && isFirstSubcategory ? "mt-2" : isFirstSubcategory ? "mt-4" : "mt-0";
         const isDeMolde = subcategory.slug === "de-molde";
-        const fontSizeClass = isDeMolde ? "text-5xl" : "";
+        const fontSizeClass = isDeMolde ? "de-molde-title" : "";
+        const firstSubcategoryClass = isFirstSubcategory ? "first-subcategory" : "";
 
         return (
-          <div key={subcategory.id} className={`space-y-4 ${marginTopClass}`}>
+          <div key={subcategory.id} className={`subcategory-container space-y-4 ${marginTopClass}`}>
             <div className="text-center space-y-1">
               <h3
-                className={`font-subcategory-title text-foreground ${fontSizeClass} ${getStyleClasses(
+                className={`font-subcategory-title text-foreground ${fontSizeClass} ${firstSubcategoryClass} ${getStyleClasses(
                   subcategory.titleStyle
                 )}`}
               >
