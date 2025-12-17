@@ -299,32 +299,6 @@
   text-transform: uppercase;
   line-height: 1.2;
   letter-spacing: 0.03em;
-  color: #ffffff;
-  text-align: center;
-  margin: 0;
-  padding-top: 0; /* No top padding */
-  padding-bottom: 6px; /* 6px gap between subcategory titles */
-}
-
-/* First subcategory in a section - even less spacing */
-.font-subcategory-title.first-subcategory {
-  padding-top: 0;
-}
-
-/* DE MOLDE - Extra Large Title */
-.de-molde-title {
-  font-size: 48px !important;
-  padding-top: 0;
-  padding-bottom: 6px; /* Same 6px gap */
-}
-
-/* Subcategory container - reduced spacing between subcategories */
-.subcategory-container {
-  margin-top: 0; /* Spacing handled by title padding-bottom */
-}
-
-.subcategory-container:not(:first-child) {
-  margin-top: 0; /* No extra margin - 6px gap from previous title's padding-bottom */
 }
 
 /* Item descriptions: Helvetica-Oblique, smaller italic text */
@@ -355,7 +329,7 @@
 /* Category descriptions: Helvetica-Oblique, medium italic */
 .font-category-description {
   font-family: "Helvetica-Oblique", "Helvetica", sans-serif;
-  font-size: 22px; /* Increased to be more like H3 relative to H1 title */
+  font-size: 18px; /* Changed from 22px to 18px */
   font-style: italic;
   color: #ffffff;
   line-height: 1.5;
@@ -815,83 +789,4 @@ body.dropdown-open .infinite-text-slider {
   font-weight: 400;
   font-style: normal;
   font-display: swap;
-}
-
-/* Snow Animation Styles */
-.snow-background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  min-height: 100vh; /* Asegurar altura mínima para mobile */
-  pointer-events: none;
-  z-index: 5; /* Por encima del logo (z-index: 1) pero debajo del contenido (z-index: 10+) */
-  overflow: hidden;
-}
-
-.snowflake {
-  position: absolute;
-  /* top se establecerá dinámicamente desde JS para que algunos copos ya estén cayendo */
-  color: white !important; /* Forzar color blanco para evitar tonos azulados */
-  font-size: 1em;
-  font-family: Arial, sans-serif;
-  text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
-  animation: snowfall linear infinite;
-  /* La opacidad se aplicará dinámicamente desde JS */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  filter: brightness(1) saturate(1); /* Asegurar que se vean blancos */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Estilos para imágenes dentro de los copos */
-.snowflake img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.8));
-}
-
-/* La animación se define dinámicamente en JS para usar CSS variables */
-/* Esta es una versión base como fallback (no se usará si JS está activo) */
-@keyframes snowfall {
-  0% {
-    transform: translateY(0) translateX(0) rotate(0deg);
-    opacity: 0;
-  }
-  5% {
-    opacity: 0.5;
-  }
-  50% {
-    opacity: 0.5;
-  }
-  100% {
-    transform: translateY(calc(100vh + 100px)) translateX(0px) rotate(360deg);
-    opacity: 0.2;
-  }
-}
-
-/* Logo debe estar por debajo de los copos */
-header {
-  position: relative;
-  z-index: 1;
-}
-
-/* Resto del contenido debe estar por encima de los copos */
-main > div {
-  position: relative;
-  z-index: 10;
-}
-
-/* Custom background wrapper */
-.menu-background-wrapper {
-  position: relative;
-  min-height: 100vh;
-}
-
-.menu-background-wrapper.custom-background {
-  /* Custom backgrounds will be applied here via inline styles */
 }

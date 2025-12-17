@@ -9,14 +9,13 @@ import type { MenuData } from "@/lib/types";
 import { MenuEditor } from "./menu-editor";
 import { CategoryManagement } from "./category-management";
 import { SliderSettings } from "./slider-settings";
-import { BackgroundSettings } from "./background-settings";
 import { NotificationContainer, useNotifications } from "./notification";
 
 export function AdminDashboard() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [menuData, setMenuData] = useState<MenuData | null>(null);
-  const [activeTab, setActiveTab] = useState<"categories" | "items" | "slider" | "background">(
+  const [activeTab, setActiveTab] = useState<"categories" | "items" | "slider">(
     "categories"
   );
   const { notifications, dismissNotification, showSuccess, showError } =
@@ -143,16 +142,6 @@ export function AdminDashboard() {
             >
               Text Slider
             </button>
-            <button
-              onClick={() => setActiveTab("background")}
-              className={`flex-1 rounded-md px-3 py-2 text-sm font-medium transition-all ${
-                activeTab === "background"
-                  ? "bg-background text-foreground shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              Background
-            </button>
           </div>
 
           {menuData ? (
@@ -186,7 +175,6 @@ export function AdminDashboard() {
               )}
 
               {activeTab === "slider" && <SliderSettings />}
-              {activeTab === "background" && <BackgroundSettings />}
             </>
           ) : (
             <div className="rounded-lg border border-border bg-card p-8 text-center">

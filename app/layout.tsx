@@ -3,7 +3,6 @@ import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import { BackToTop } from "@/components/back-to-top";
 import { InfiniteTextSlider } from "@/components/infinite-text-slider";
-import { BackgroundApplier } from "@/components/background-applier";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -28,7 +27,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="font-sans antialiased">
-        <BackgroundApplier />
         <InfiniteTextSlider position="top" />
         <div className="pt-[2.5rem] md:pt-12">{children}</div>
         <BackToTop />

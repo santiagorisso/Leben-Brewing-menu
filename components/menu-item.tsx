@@ -42,15 +42,17 @@ export function MenuItem({ item, categorySlug }: MenuItemProps) {
       )}
 
       {/* Item Content */}
-      <div className={`${isWine ? "wine-item-content" : ""} space-y-1`}>
+      <div className={`${isWine ? "wine-item-content" : ""} ${isWine ? "space-y-2" : "space-y-1"} ${isWine ? "flex flex-col items-center justify-center" : ""}`}>
         {/* Wine Type - displayed above wine name for wines */}
-        {isWine && item.wineType && (
+        {isWine && item.wineType ? (
           <div className="text-center">
             <span className={`font-wine-type ${textColor}`}>
               {item.wineType}
             </span>
           </div>
-        )}
+        ) : isWine ? (
+          <div className="h-5"></div> // Placeholder para mantener altura consistente
+        ) : null}
 
         {/* Name, Side Note, and Vegetarian Badge */}
         <div
@@ -112,7 +114,7 @@ export function MenuItem({ item, categorySlug }: MenuItemProps) {
         )}
 
         {/* Description - white when available, gray when sold out */}
-        {item.description && (
+        {item.description ? (
           <p
             className={`mx-auto max-w-2xl ${
               isTragos ? "font-tragos-description" : "font-item-description"
@@ -124,19 +126,20 @@ export function MenuItem({ item, categorySlug }: MenuItemProps) {
               isTragos ? "tragos-description-no-padding" : ""
             } ${textColor} ${getStyleClasses(
               item.descriptionStyle
-            )} whitespace-pre-line pt-0 pb-1`}
+            )} whitespace-pre-line ${isWine ? "pt-0 pb-0" : "pt-0 pb-1"}`}
             dangerouslySetInnerHTML={{ __html: item.description }}
           />
-        )}
+        ) : isWine ? (
+          <div className="h-4"></div> // Placeholder para mantener altura consistente
+        ) : null}
 
         {/* Pricing - formatted with $ and .– */}
-        <div className="pt-1 text-center">
+        <div className={`${isWine ? "pt-2" : "pt-1"} text-center mb-0`}>
           {isWine && item.glassPrice && item.bottlePrice ? (
-            <div className="flex items-center justify-center gap-2">
+            <div className="flex flex-col items-center justify-center gap-1 mb-0">
               <span className={`font-price ${textColor}`}>
                 copa ${item.glassPrice}.–
               </span>
-              <span className={textColor}>/</span>
               <span className={`font-price ${textColor}`}>
                 botella ${item.bottlePrice}.–
               </span>
