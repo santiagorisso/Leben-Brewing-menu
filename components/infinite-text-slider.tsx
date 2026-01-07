@@ -157,14 +157,14 @@ export function InfiniteTextSlider({ position }: InfiniteTextSliderProps) {
         {/* First copy of content */}
         <div className="infinite-text-slider-content">
           <span
-            className="text-white text-sm md:text-base font-sans px-8"
+            className="text-white text-base md:text-lg font-knockout-full tracking-widest uppercase px-8"
             dangerouslySetInnerHTML={{ __html: settings.text }}
           />
         </div>
         {/* Second copy of content for seamless loop */}
         <div className="infinite-text-slider-content">
           <span
-            className="text-white text-sm md:text-base font-sans px-8"
+            className="text-white text-base md:text-lg font-knockout-full tracking-widest uppercase px-8"
             dangerouslySetInnerHTML={{ __html: settings.text }}
           />
         </div>

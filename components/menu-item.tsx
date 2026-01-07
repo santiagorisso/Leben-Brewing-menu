@@ -7,17 +7,14 @@ interface MenuItemProps {
 }
 
 export function MenuItem({ item, categorySlug }: MenuItemProps) {
-  const isBeer = categorySlug === "cervezas" || categorySlug === "beers";
-  const isWine = categorySlug === "vinos" || categorySlug === "wines";
-  const isEmpanadas = categorySlug === "empanadas";
-  const isParaPicar =
-    categorySlug === "para-picar" || categorySlug === "para picar";
-  const isTragos = categorySlug === "tragos" || categorySlug === "drinks";
-
-  // Determine text color based on availability
+  // Use slug matching for category-specific logic
+  const isBeer = categorySlug.includes("cervezas") || categorySlug.includes("beers");
+  const isWine = categorySlug.includes("vinos") || categorySlug.includes("wines");
+  const isTragos = categorySlug.includes("tragos") || categorySlug.includes("drinks");
+  
   const textColor = item.available ? "text-white" : "text-muted";
 
-  // Helper function to get style classes based on TextStyle
+  // Helper for inline styles
   const getStyleClasses = (
     style: { bold?: boolean; italic?: boolean } | undefined
   ) => {
@@ -28,115 +25,85 @@ export function MenuItem({ item, categorySlug }: MenuItemProps) {
   };
 
   return (
-    <div className="relative py-3 text-center md:py-4">
+    <div className="relative py-2 text-center">
+      {/* Sold Out Overlay */}
       {!item.available && (
-        <div className="absolute inset-0 z-10 flex items-center justify-center">
+        <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
           <Image
             src="/images/soldout.png"
             alt="Sold Out"
-            width={300}
-            height={150}
-            className="opacity-70"
+            width={120}
+            height={60}
+            className="opacity-80 rotate-[-15deg]"
           />
         </div>
       )}
 
-      {/* Item Content */}
-      <div className={`${isWine ? "wine-item-content" : ""} ${isWine ? "space-y-2" : "space-y-1"} ${isWine ? "flex flex-col items-center justify-center" : ""}`}>
-        {/* Wine Type - displayed above wine name for wines */}
-        {isWine && item.wineType ? (
-          <div className="text-center">
-            <span className={`font-wine-type ${textColor}`}>
-              {item.wineType}
-            </span>
-          </div>
-        ) : isWine ? (
-          <div className="h-5"></div> // Placeholder para mantener altura consistente
-        ) : null}
+      <div className={`flex flex-col items-center justify-center space-y-1`}>
+        {/* Wine Type (only for wines) */}
+        {isWine && item.wineType && (
+          <span className={`font-wine-type ${textColor}`}>
+            {item.wineType}
+          </span>
+        )}
 
-        {/* Name, Side Note, and Vegetarian Badge */}
-        <div
-          className={`flex items-center justify-center gap-2 ${
-            isTragos ? "tragos-title-no-margin" : ""
-          }`}
-        >
+        {/* Item Name + Veggie Icon */}
+        <div className="flex items-center justify-center gap-2 leading-none">
           <h3
-            className={`${
-              isWine
-                ? "font-wine-title"
-                : isTragos
-                ? "font-tragos-title"
-                : "font-item-title"
-            } ${textColor} ${getStyleClasses(item.titleStyle)}`}
+            className={`
+              ${isWine ? "font-wine-title" : "font-item-title"}
+              ${textColor}
+              ${getStyleClasses(item.titleStyle)}
+            `}
           >
             {item.name}
           </h3>
+          
+          {/* Side Note (e.g. "+ Papas") */}
           {item.sideNote && (
-            <>
-              {item.showPlusBeforeSideNote && (
-                <span
-                  className={`font-side-note ${textColor} ${getStyleClasses(
-                    item.sideNoteStyle
-                  )}`}
-                >
-                  +
-                </span>
-              )}
-              <span
-                className={`font-side-note ${textColor} ${getStyleClasses(
-                  item.sideNoteStyle
-                )}`}
-              >
-                {item.sideNote}
-              </span>
-            </>
+            <span className={`font-side-note ${textColor} ${getStyleClasses(item.sideNoteStyle)}`}>
+              {item.showPlusBeforeSideNote && "+ "}{item.sideNote}
+            </span>
           )}
+
+          {/* Vegetarian Badge */}
           {item.vegetarian && (
             <Image
               src="/images/veggie.png"
               alt="Vegetarian"
               width={16}
               height={16}
-              className="shrink-0"
+              className="ml-1"
             />
           )}
         </div>
 
-        {/* Beer Stats - IBU and ABV on same line */}
+        {/* Beer Stats (IBU / ABV) */}
         {isBeer && (item.ibu || item.abv) && (
-          <div
-            className={`flex items-center justify-center gap-3 text-sm font-knockout-full ${textColor}`}
-            style={{ marginTop: "-0.25rem" }}
-          >
-            {item.ibu && <span>IBU: {item.ibu}</span>}
-            {item.abv && <span>ABV: {item.abv}</span>}
+          <div className={`flex items-center justify-center gap-3 text-sm font-knockout-full ${textColor} opacity-90`}>
+             {item.ibu && <span>IBU {item.ibu}</span>}
+             {item.abv && <span>ABV {item.abv}</span>}
           </div>
         )}
 
-        {/* Description - white when available, gray when sold out */}
-        {item.description ? (
+        {/* Description */}
+        {item.description && (
           <p
-            className={`mx-auto max-w-2xl ${
-              isTragos ? "font-tragos-description" : "font-item-description"
-            } ${isBeer ? "beer-description" : ""} ${
-              isEmpanadas ? "empanadas-description" : ""
-            } ${isParaPicar ? "para-picar-description" : ""} ${
-              isWine ? "wine-description-spacing" : ""
-            } ${
-              isTragos ? "tragos-description-no-padding" : ""
-            } ${textColor} ${getStyleClasses(
-              item.descriptionStyle
-            )} whitespace-pre-line ${isWine ? "pt-0 pb-0" : "pt-0 pb-1"}`}
+            className={`
+              mx-auto max-w-lg
+              font-item-description
+              ${textColor}
+              ${getStyleClasses(item.descriptionStyle)}
+              whitespace-pre-line
+            `}
             dangerouslySetInnerHTML={{ __html: item.description }}
           />
-        ) : isWine ? (
-          <div className="h-4"></div> // Placeholder para mantener altura consistente
-        ) : null}
+        )}
 
-        {/* Pricing - formatted with $ and .– */}
-        <div className={`${isWine ? "pt-2" : "pt-1"} text-center mb-0`}>
+        {/* Price */}
+        <div className="mt-1">
           {isWine && item.glassPrice && item.bottlePrice ? (
-            <div className="flex flex-col items-center justify-center gap-1 mb-0">
+            <div className="flex flex-col items-center gap-0">
               <span className={`font-price ${textColor}`}>
                 copa ${item.glassPrice}.–
               </span>
@@ -145,11 +112,7 @@ export function MenuItem({ item, categorySlug }: MenuItemProps) {
               </span>
             </div>
           ) : (
-            <span
-              className={`${
-                isTragos ? "font-tragos-price" : "font-price"
-              } ${textColor}`}
-            >
+            <span className={`font-price ${textColor}`}>
               ${item.price}.–
             </span>
           )}

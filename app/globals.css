@@ -5,74 +5,48 @@
 
 /* Custom design tokens for bar menu theme */
 :root {
-  --background: rgb(0, 0, 1);
-  --foreground: rgb(255, 255, 255);
-  --card: rgb(20, 20, 21);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: rgb(100, 100, 100);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.68 0.18 50);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: rgb(40, 40, 41);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
+  --background: #000000;
+  --foreground: #ffffff;
+  --card: #141415;
+  --card-foreground: #ffffff;
+  --popover: #ffffff;
+  --popover-foreground: #000000;
+  --primary: #ffffff;
+  --primary-foreground: #000000;
+  --secondary: #f5f5f5;
+  --secondary-foreground: #000000;
+  --muted: #646464;
+  --muted-foreground: #a1a1aa;
+  --accent: #ffffff;
+  --accent-foreground: #000000;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #282829;
+  --input: #282829;
+  --ring: #ffffff;
   --radius: 0.5rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.269 0 0);
-  --input: oklch(0.269 0 0);
-  --ring: oklch(0.439 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.269 0 0);
-  --sidebar-ring: oklch(0.439 0 0);
+  --background: #000000;
+  --foreground: #ffffff;
+  --card: #000000;
+  --card-foreground: #ffffff;
+  --popover: #000000;
+  --popover-foreground: #ffffff;
+  --primary: #ffffff;
+  --primary-foreground: #000000;
+  --secondary: #282829;
+  --secondary-foreground: #ffffff;
+  --muted: #282829;
+  --muted-foreground: #a1a1aa;
+  --accent: #282829;
+  --accent-foreground: #ffffff;
+  --destructive: #7f1d1d;
+  --destructive-foreground: #ffffff;
+  --border: #282829;
+  --input: #282829;
+  --ring: #ffffff;
 }
 
 @theme inline {
@@ -81,6 +55,7 @@
   --font-sans-condensed: "Helvetica Condensed", "Helvetica", "Arial", sans-serif;
   --font-sans-light: "Helvetica Light", "Helvetica", "Arial", sans-serif;
   --font-display: "Knockout", "Impact", sans-serif;
+  
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -100,23 +75,11 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
+  
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
 }
 
 @layer base {
@@ -126,636 +89,18 @@
   body {
     @apply bg-background text-foreground;
     scroll-behavior: smooth;
-    /* Ensure fixed elements are relative to viewport, not body */
     position: relative;
+    background-color: #000000; /* Ensure pure black */
+    color: #ffffff;
   }
   html {
-    /* Prevent any transforms on html that could break fixed positioning */
     transform: none;
     -webkit-transform: none;
+    background-color: #000000;
   }
 }
 
-/* Infinite Text Slider - Seamless Marquee Animation */
-:root {
-  --marquee-height: 2.5rem; /* 40px default, 48px on md screens */
-  --animation-duration: 24s;
-}
-
-@media (min-width: 768px) {
-  :root {
-    --marquee-height: 3rem; /* 48px on desktop */
-  }
-}
-
-.infinite-text-slider {
-  display: flex;
-  align-items: center;
-  pointer-events: none; /* Allow clicks through when not interactive */
-  /* Ensure fixed positioning works on mobile and desktop */
-  position: fixed !important;
-  left: 0 !important;
-  right: 0 !important;
-  /* High z-index to stay above all content */
-  z-index: 9999 !important;
-  /* Mobile-specific fixes for fixed positioning */
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  /* Prevent any parent transforms from affecting positioning */
-  isolation: isolate;
-}
-
-/* Top slider - always at top */
-.infinite-text-slider[data-position="top"] {
-  top: 0 !important;
-  bottom: env(safe-area-inset-bottom, 0) !important;
-}
-
-/* Bottom slider - account for mobile browser bar */
-.infinite-text-slider[data-position="bottom"] {
-  top: auto !important;
-  bottom: env(safe-area-inset-bottom, 0) !important;
-}
-
-/* Mobile-specific: ensure bottom slider stays at viewport bottom */
-@media (max-width: 768px) {
-  .infinite-text-slider[data-position="bottom"] {
-    /* Force bottom alignment, accounting for browser UI */
-    /* Use calc to ensure it stays at viewport bottom */
-    bottom: calc(env(safe-area-inset-bottom, 0px)) !important;
-    /* Ensure fixed positioning persists */
-    position: fixed !important;
-  }
-}
-
-.infinite-text-slider-track {
-  display: flex;
-  width: 200%;
-  will-change: transform;
-}
-
-.infinite-text-slider-content {
-  flex: 0 0 50%;
-  display: flex;
-  align-items: center;
-  white-space: nowrap;
-}
-
-/* Left to right animation (default) - using CSS variable for duration */
-@keyframes marquee-scroll-left {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-/* Right to left animation */
-@keyframes marquee-scroll-right {
-  0% {
-    transform: translateX(-50%);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-
-/* Animation classes - duration controlled by CSS variable */
-.marquee-animate-left {
-  animation: marquee-scroll-left linear infinite;
-  animation-duration: var(--animation-duration, 24s);
-  animation-fill-mode: none;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-
-.marquee-animate-right {
-  animation: marquee-scroll-right linear infinite;
-  animation-duration: var(--animation-duration, 24s);
-  animation-fill-mode: none;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-
-/* Respect reduced motion preference */
-@media (prefers-reduced-motion: reduce) {
-  .infinite-text-slider-track,
-  .marquee-animate-left,
-  .marquee-animate-right {
-    animation: none !important;
-  }
-}
-
-/* Letter spacing utilities for Knockout font */
-.font-display {
-  letter-spacing: 0.05em;
-}
-
-.font-display-tight {
-  letter-spacing: 0.02em;
-}
-
-.font-display-wide {
-  letter-spacing: 0.08em;
-}
-
-/* Custom font classes for menu typography */
-.font-knockout-full {
-  font-family: "Knockout-FullLiteweight", "Impact", sans-serif;
-  text-transform: uppercase;
-}
-
-.font-helvetica-oblique {
-  font-family: "Helvetica-Oblique", "Helvetica", sans-serif;
-  font-style: italic;
-}
-
-/* Category titles: Knockout-FullLiteweight, larger and bold */
-.font-category-title {
-  font-family: "Knockout-FullLiteweight", "Impact", sans-serif;
-  font-size: 72px; /* Adjusted for better visibility */
-  font-weight: bold;
-  text-transform: uppercase;
-  line-height: 1.1;
-  letter-spacing: 0.05em;
-}
-
-/* Item titles: Knockout-FullLiteweight, medium size */
-.font-item-title {
-  font-family: "Knockout-FullLiteweight", "Impact", sans-serif;
-  font-size: 28px; /* Reduced slightly for better proportion */
-  text-transform: uppercase;
-  line-height: 1.2;
-  letter-spacing: 0.03em;
-}
-
-/* Subcategory titles: Larger than item titles for better visibility */
-.font-subcategory-title {
-  font-family: "Knockout-FullLiteweight", "Impact", sans-serif;
-  font-size: 36px; /* Larger for better visibility */
-  text-transform: uppercase;
-  line-height: 1.2;
-  letter-spacing: 0.03em;
-}
-
-/* Item descriptions: Helvetica-Oblique, smaller italic text */
-.font-item-description {
-  font-family: "Helvetica-Oblique", "Helvetica", sans-serif;
-  font-size: 13px; /* Increased to be more readable */
-  font-style: italic;
-  line-height: 1.5;
-  letter-spacing: 0.01em;
-}
-
-/* Bold text inside descriptions */
-.font-item-description b {
-  font-weight: 700;
-  font-style: normal;
-}
-
-/* Larger description on mobile for better readability */
-@media (max-width: 768px) {
-  .font-item-description {
-    font-size: 14px;
-    line-height: 1.6;
-  }
-}
-
-/* All item descriptions now use the same base size */
-
-/* Category descriptions: Helvetica-Oblique, medium italic */
-.font-category-description {
-  font-family: "Helvetica-Oblique", "Helvetica", sans-serif;
-  font-size: 18px; /* Changed from 22px to 18px */
-  font-style: italic;
-  color: #ffffff;
-  line-height: 1.5;
-  letter-spacing: 0.01em;
-}
-
-/* Bold text inside category descriptions */
-.font-category-description b {
-  font-weight: 700;
-  font-style: normal;
-}
-
-/* Larger category descriptions on mobile for better readability */
-@media (max-width: 768px) {
-  .font-category-description {
-    font-size: 18px;
-  }
-}
-
-/* Prices: Helvetica-Bold Oblique, bold and white */
-.font-price {
-  font-family: "Helvetica-Bold Oblique", "Helvetica", sans-serif;
-  font-size: 18px;
-  font-style: italic;
-  font-weight: 700;
-  color: #ffffff; /* White for prices */
-  line-height: 1.2;
-  letter-spacing: 0.05em;
-}
-
-/* Greyed out prices for unavailable items */
-.font-price.text-muted {
-  color: rgb(100, 100, 100); /* Grey color for unavailable items */
-}
-
-/* Side note: Helvetica Condensed, medium size */
-.font-side-note {
-  font-family: "Helvetica Condensed", "Helvetica", "Arial", sans-serif;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 400;
-  color: #ffffff;
-  line-height: 1.2;
-  letter-spacing: 0.02em;
-}
-
-/* Wine-specific styling */
-.font-wine-title {
-  font-family: "Knockout-FullLiteweight", "Impact", sans-serif;
-  font-size: 36px; /* Larger than regular item titles */
-  text-transform: uppercase;
-  line-height: 1.1;
-  letter-spacing: 0.03em;
-  font-weight: bold; /* Make it more prominent */
-}
-
-.font-wine-type {
-  font-family: "Helvetica-Oblique", "Helvetica", sans-serif;
-  font-size: 16px; /* Keep current size as requested */
-  font-style: italic;
-  line-height: 1.4;
-  letter-spacing: 0.01em;
-}
-
-/* Wine item spacing for better layout */
-.wine-item-content {
-  text-align: center;
-}
-
-.wine-description-spacing {
-  margin-bottom: 0.5rem; /* Reduced spacing between description and prices */
-}
-
-/* Tragos-specific styling for two-column layout */
-.font-tragos-title {
-  font-family: "Knockout-FullLiteweight", "Impact", sans-serif;
-  font-size: 24px; /* Slightly smaller than regular item titles */
-  text-transform: uppercase;
-  line-height: 1.2;
-  letter-spacing: 0.03em;
-}
-
-.font-tragos-description {
-  font-family: "Helvetica-Oblique", "Helvetica", sans-serif;
-  font-size: 12px; /* Slightly smaller than regular descriptions */
-  font-style: italic;
-  line-height: 1.4;
-  letter-spacing: 0.01em;
-}
-
-.font-tragos-price {
-  font-family: "Helvetica-Bold Oblique", "Helvetica", sans-serif;
-  font-size: 16px; /* Slightly smaller than regular prices */
-  font-style: italic;
-  font-weight: 700;
-  color: #ffffff;
-  line-height: 1.2;
-  letter-spacing: 0.05em;
-}
-
-/* Greyed out prices for unavailable items in tragos */
-.font-tragos-price.text-muted {
-  color: rgb(100, 100, 100);
-}
-
-/* Tragos-specific spacing adjustments */
-.tragos-description-no-padding {
-  padding-top: 0 !important;
-}
-
-.tragos-title-no-margin {
-  margin-bottom: 0 !important;
-}
-
-/* From Uiverse.io by andrew-demchenk0 */
-.uiverse-button {
-  --font-color: #323232;
-  --bg-color: #fff;
-  --main-color: #323232;
-  min-width: 120px;
-  min-height: 40px;
-  border-radius: 5px;
-  border: 2px solid var(--main-color);
-  background-color: var(--bg-color);
-  box-shadow: 4px 4px var(--main-color);
-  font-size: 17px;
-  font-weight: 600;
-  color: var(--font-color);
-  cursor: pointer;
-  transition: transform 150ms ease, box-shadow 150ms ease;
-  padding: 8px 16px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-family: inherit;
-  line-height: 1.2;
-}
-
-.uiverse-button:active {
-  box-shadow: 0px 0px var(--main-color);
-  transform: translate(3px, 3px);
-}
-
-.uiverse-button:focus {
-  outline: 2px solid var(--main-color);
-  outline-offset: 2px;
-}
-
-/* Button variants for different contexts */
-.uiverse-button-primary {
-  --font-color: #323232;
-  --bg-color: #fff;
-  --main-color: #323232;
-}
-
-.uiverse-button-secondary {
-  --font-color: #323232;
-  --bg-color: #f5f5f5;
-  --main-color: #323232;
-}
-
-.uiverse-button-accent {
-  --font-color: #323232;
-  --bg-color: #fff;
-  --main-color: #323232;
-}
-
-/* Category navigation buttons - larger with proper text handling */
-.uiverse-button-category {
-  --font-color: #323232;
-  --bg-color: #fff;
-  --main-color: #323232;
-  min-width: auto;
-  width: 100%;
-  min-height: 60px;
-  padding: 12px 16px;
-  font-size: 18px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-family: "Knockout-FullLiteweight", "Impact", sans-serif;
-  line-height: 1.1;
-}
-
-@media (min-width: 768px) {
-  .uiverse-button-category {
-    min-height: 50px;
-    padding: 10px 20px;
-    font-size: 20px;
-  }
-}
-
-/* Category Menu Button - From Uiverse.io by ArturCodeCraft */
-/* <reset-style> ============================ */
-.category-menu-button {
-  border: none;
-  background: none;
-  padding: 0;
-  margin: 0;
-  cursor: pointer;
-  font-family: inherit;
-}
-
-/* ============================ */
-/* <style for bg> ======== */
-.category-menu-background {
-  position: fixed;
-  bottom: calc(2rem + var(--marquee-height, 2.5rem) + 0.5rem);
-  right: 2rem;
-  z-index: 50;
-  border-radius: 16px;
-  border: 1px solid #1a1a1a;
-  background: rgba(74, 74, 74, 0.39);
-  mix-blend-mode: luminosity;
-  box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(15px);
-  width: 50px;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-@media (min-width: 768px) {
-  .category-menu-background {
-    bottom: calc(2rem + 3rem + 0.5rem);
-  }
-}
-
-/* <style for menu__icon> ======== */
-.category-menu-icon {
-  width: 24px;
-  height: 24px;
-  padding: 4px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: transform 0.4s;
-}
-
-.category-menu-icon span {
-  width: 100%;
-  height: 0.25rem;
-  border-radius: 0.125rem;
-  background-color: rgb(0, 122, 255);
-  box-shadow: 0 0.5px 2px 0 hsla(0, 0%, 0%, 0.2);
-  transition: width 0.4s, transform 0.4s, background-color 0.4s;
-}
-
-.category-menu-icon :nth-child(1) {
-  width: 75%;
-}
-
-.category-menu-icon :nth-child(2) {
-  width: 50%;
-}
-
-.category-menu-icon:hover {
-  transform: rotate(-90deg);
-}
-
-.category-menu-icon:hover span {
-  width: 0.25rem;
-  transform: translateX(10px);
-  background-color: rgb(255, 59, 48);
-}
-
-/* Dropdown backdrop and blur effect */
-.category-dropdown-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 48;
-  pointer-events: auto;
-}
-
-body.dropdown-open {
-  overflow: hidden;
-}
-
-body.dropdown-open main,
-body.dropdown-open header,
-body.dropdown-open nav {
-  filter: blur(4px);
-  transition: filter 0.3s ease;
-  pointer-events: none;
-}
-
-body.dropdown-open .infinite-text-slider {
-  filter: blur(4px);
-  transition: filter 0.3s ease;
-}
-
-.category-menu-background,
-.category-dropdown {
-  filter: none !important;
-  pointer-events: auto !important;
-}
-
-/* Dropdown animation keyframes */
-@keyframes translateX {
-  0% {
-    opacity: 0;
-    transform: translateX(60px);
-  }
-
-  80% {
-    transform: translateX(-5px);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateX(0px);
-  }
-}
-
-@keyframes translateXReverse {
-  0% {
-    opacity: 1;
-    transform: translateX(0px);
-  }
-
-  20% {
-    transform: translateX(-5px);
-  }
-
-  100% {
-    opacity: 0;
-    transform: translateX(60px);
-  }
-}
-
-/* Dropdown menu */
-.category-dropdown {
-  position: fixed;
-  bottom: calc(2rem + var(--marquee-height, 2.5rem) + 50px + 1rem);
-  right: 2rem;
-  z-index: 49;
-  padding: 0.5rem;
-  min-width: 180px;
-  display: flex;
-  flex-direction: column;
-  gap: 0.375rem;
-  animation: translateX 0.4s ease-out forwards;
-}
-
-.category-dropdown.closing {
-  animation: translateXReverse 0.3s ease-in forwards;
-}
-
-@media (min-width: 768px) {
-  .category-dropdown {
-    bottom: calc(2rem + 3rem + 50px + 1rem);
-  }
-}
-
-@media (max-width: 767px) {
-  .category-dropdown {
-    bottom: calc(2rem + 2.5rem + 50px + 1rem);
-  }
-}
-
-.category-dropdown-item {
-  --font-color: #323232;
-  --bg-color: #fff;
-  --main-color: #323232;
-  min-width: auto;
-  width: 100%;
-  min-height: 36px;
-  padding: 6px 12px;
-  font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-family: "Knockout-FullLiteweight", "Impact", sans-serif;
-  line-height: 1.1;
-  border-radius: 5px;
-  border: 2px solid var(--main-color);
-  background-color: var(--bg-color);
-  box-shadow: 3px 3px var(--main-color);
-  color: var(--font-color);
-  cursor: pointer;
-  transition: transform 150ms ease, box-shadow 150ms ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.category-dropdown-item:active {
-  box-shadow: 0px 0px var(--main-color);
-  transform: translate(2px, 2px);
-}
-
-.category-dropdown-item:focus {
-  outline: 2px solid var(--main-color);
-  outline-offset: 2px;
-}
-
-@media (min-width: 768px) {
-  .category-dropdown-item {
-    min-height: 40px;
-    padding: 8px 14px;
-    font-size: 14px;
-  }
-}
-
-/* Font family utilities */
-.font-sans-condensed {
-  font-family: var(--font-sans-condensed);
-}
-
-.font-sans-light {
-  font-family: var(--font-sans-light);
-}
-
-/* Knockout font faces for display titles */
+/* Font Faces */
 @font-face {
   font-family: "Knockout-FullLiteweight";
   src: url("/fonts/Knockout-FullLiteweight.woff2") format("woff2"),
@@ -790,3 +135,259 @@ body.dropdown-open .infinite-text-slider {
   font-style: normal;
   font-display: swap;
 }
+
+/* Typography Tokens - Precise replication */
+
+/* Category Titles: Big, Condensed, Uppercase */
+.font-category-title {
+  font-family: "Knockout-FullLiteweight", "Impact", sans-serif;
+  font-size: 4.5rem; /* ~72px */
+  font-weight: 400; /* Knockout handles weight */
+  text-transform: uppercase;
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.5rem;
+}
+
+/* Subcategory Titles */
+.font-subcategory-title {
+  font-family: "Knockout-FullLiteweight", "Impact", sans-serif;
+  font-size: 2.25rem; /* ~36px */
+  text-transform: uppercase;
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+/* Item Titles */
+.font-item-title {
+  font-family: "Knockout-FullLiteweight", "Impact", sans-serif;
+  font-size: 1.75rem; /* ~28px */
+  text-transform: uppercase;
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+/* Descriptions: Italic Helvetica */
+.font-item-description {
+  font-family: "Helvetica-Oblique", "Helvetica", sans-serif;
+  font-size: 0.875rem; /* ~14px */
+  font-style: italic;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  color: #ffffff; /* Explicitly white */
+}
+
+/* Category Descriptions */
+.font-category-description {
+  font-family: "Helvetica-Oblique", "Helvetica", sans-serif;
+  font-size: 1.125rem; /* ~18px */
+  font-style: italic;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  color: #ffffff;
+}
+
+/* Prices: Bold Italic Helvetica */
+.font-price {
+  font-family: "Helvetica-Bold Oblique", "Helvetica", sans-serif;
+  font-size: 1.125rem; /* ~18px */
+  font-style: italic;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+}
+
+.text-muted {
+  color: #646464 !important;
+}
+
+/* Specific Wine Styles */
+.font-wine-title {
+  font-family: "Knockout-FullLiteweight", "Impact", sans-serif;
+  font-size: 2.25rem; /* ~36px */
+  text-transform: uppercase;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  font-weight: 400;
+}
+
+.font-wine-type {
+  font-family: "Helvetica-Oblique", "Helvetica", sans-serif;
+  font-size: 1rem;
+  font-style: italic;
+  letter-spacing: 0.01em;
+}
+
+/* Infinite Text Slider Styles */
+:root {
+  --marquee-height: 2.5rem;
+  --animation-duration: 24s;
+}
+
+.infinite-text-slider {
+  position: fixed !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 9999;
+  pointer-events: none;
+  display: flex !important;
+  align-items: center !important;
+}
+.infinite-text-slider[data-position="top"] { top: 0; }
+.infinite-text-slider[data-position="bottom"] { bottom: 0; }
+
+.infinite-text-slider-track {
+  display: flex;
+  width: 200%;
+  height: 100%;
+  align-items: center;
+}
+
+.infinite-text-slider-content {
+  flex: 0 0 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center text horizontally within its chunk if needed, though usually left aligned in marquee */
+  white-space: nowrap;
+  height: 100%;
+}
+
+.marquee-animate-left {
+  animation: marquee-scroll-left var(--animation-duration) linear infinite;
+}
+
+@keyframes marquee-scroll-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Category Nav / Shared Button Styles */
+.uiverse-button {
+  border: 2px solid #323232;
+  background: #ffffff;
+  color: #323232;
+  font-family: "Knockout-FullLiteweight", sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  cursor: pointer;
+  box-shadow: 4px 4px #323232;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.uiverse-button:active {
+  box-shadow: 0 0 #323232;
+  transform: translate(3px, 3px);
+}
+
+/* Floating Menu Styles */
+.category-menu-background {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.category-menu-button {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background-color: #ffffff;
+  border: 2px solid #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  transition: transform 0.2s, background-color 0.2s;
+  padding: 0;
+}
+
+.category-menu-button:hover {
+  transform: scale(1.05);
+}
+
+.category-menu-button:active {
+  transform: scale(0.95);
+}
+
+.category-menu-icon span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: #000000;
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+/* Transform to X when open */
+.category-menu-button[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.category-menu-button[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+
+.category-menu-button[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* Dropdown Menu */
+.category-dropdown {
+  position: fixed;
+  bottom: 6.5rem; /* Above the button */
+  right: 2rem;
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 0.75rem;
+  padding: 0.5rem;
+  width: 14rem;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.category-dropdown-item {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  color: #ffffff;
+  font-family: "Knockout-FullLiteweight", sans-serif;
+  font-size: 1.125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 0.375rem;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.category-dropdown-item:hover,
+.category-dropdown-item:focus {
+  background-color: #ffffff;
+  color: #000000;
+  outline: none;
+}
+
+/* Backdrop */
+.category-dropdown-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 40;
+}
+
+/* Animation utilities for the simplified refactor */
+.closing {
+    /* Used for exit animations if needed, but we used opacity classes in the component */
+}
+
+
