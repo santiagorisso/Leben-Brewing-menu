@@ -24,6 +24,23 @@ export function MenuEditor({
 }: MenuEditorProps) {
   const [categories, setCategories] = useState(data.categories);
   const [saving, setSaving] = useState(false);
+  const [showInactive, setShowInactive] = useState(false);
+
+  // Initialize showInactive from localStorage on mount
+  useState(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("adminShowInactive");
+      if (saved !== null) {
+        setShowInactive(saved === "true");
+      }
+    }
+  });
+
+  const handleToggleInactive = () => {
+    const newValue = !showInactive;
+    setShowInactive(newValue);
+    localStorage.setItem("adminShowInactive", String(newValue));
+  };
 
   const handleSave = async () => {
     setSaving(true);
@@ -84,7 +101,19 @@ export function MenuEditor({
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-end">
+      <div className="flex justify-end gap-4">
+        <div className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              id="showInactive"
+              checked={showInactive}
+              onChange={handleToggleInactive}
+              className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+            />
+            <label htmlFor="showInactive" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+              Show Inactive Items
+            </label>
+        </div>
         <Button onClick={handleSave} disabled={saving}>
           {saving ? "Saving..." : "Save Changes"}
         </Button>
@@ -97,6 +126,7 @@ export function MenuEditor({
             category={category}
             onUpdate={handleCategoryUpdate}
             onAutoSave={handleAutoSave}
+            showInactive={showInactive}
           />
         ))}
       </div>

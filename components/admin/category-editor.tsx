@@ -16,7 +16,7 @@ interface CategoryEditorProps {
   onAutoSave?: (category: MenuCategory) => Promise<void>;
 }
 
-export function CategoryEditor({ category, onUpdate, onAutoSave }: CategoryEditorProps) {
+export function CategoryEditor({ category, onUpdate, onAutoSave, showInactive = false }: CategoryEditorProps & { showInactive?: boolean }) {
   const [expanded, setExpanded] = useState(false);
   const [items, setItems] = useState(category.items);
   const [editingItem, setEditingItem] = useState<MenuItem | null>(null);
@@ -44,36 +44,41 @@ export function CategoryEditor({ category, onUpdate, onAutoSave }: CategoryEdito
 
     if (dragIndex === dropIndex) return;
 
+    // We are dragging within the VISIBLE list.
+    // Need to map back to the full list to determine correct order keys.
     const sortedItems = sortByOrder(items);
-    const draggedItem = sortedItems[dragIndex];
+    
+    // Filter items based on visibility to match what the user sees
+    const visibleItems = showInactive 
+      ? sortedItems 
+      : sortedItems.filter(item => item.active !== false);
+      
+    const draggedItem = visibleItems[dragIndex];
+    if (!draggedItem) return;
 
     // Calculate new order value using fractional indexing
     let newOrder: string;
 
     if (dropIndex === 0) {
-      // Moving to first position
-      newOrder = generateKeyBetween(null, sortedItems[0].order);
-    } else if (dropIndex >= sortedItems.length - 1) {
-      // Moving to last position
-      newOrder = generateKeyBetween(
-        sortedItems[sortedItems.length - 1].order,
-        null
-      );
+      // Moving to first position in the VISIBLE list
+      // We want to be immediately before the first visible item
+      // But we must respect any hidden items that are physically before the first visible item
+      const successor = visibleItems[0];
+      const successorIndexInFull = sortedItems.findIndex(i => i.id === successor.id);
+      const predecessorInFull = successorIndexInFull > 0 ? sortedItems[successorIndexInFull - 1] : null;
+      
+      newOrder = generateKeyBetween(predecessorInFull?.order || null, successor.order);
     } else {
-      // Moving to middle position
-      if (dragIndex < dropIndex) {
-        // Moving down: place between dropIndex and dropIndex + 1
-        newOrder = generateKeyBetween(
-          sortedItems[dropIndex].order,
-          sortedItems[dropIndex + 1]?.order || null
-        );
-      } else {
-        // Moving up: place between dropIndex - 1 and dropIndex
-        newOrder = generateKeyBetween(
-          sortedItems[dropIndex - 1]?.order || null,
-          sortedItems[dropIndex].order
-        );
-      }
+      // Moving to after the (dropIndex - 1)th item in the visible list
+      const predecessor = visibleItems[dropIndex - 1]; // This is the item we want to be after
+      
+      // Find what is physically after this predecessor in the full list (could be a hidden item)
+      const predecessorIndexInFull = sortedItems.findIndex(i => i.id === predecessor.id);
+      const successorInFull = predecessorIndexInFull < sortedItems.length - 1 
+        ? sortedItems[predecessorIndexInFull + 1] 
+        : null;
+        
+      newOrder = generateKeyBetween(predecessor.order, successorInFull?.order || null);
     }
 
     const updatedItems = items.map((item) =>
@@ -159,6 +164,9 @@ export function CategoryEditor({ category, onUpdate, onAutoSave }: CategoryEdito
   };
 
   const sortedItems = sortByOrder(items);
+  const visibleItems = showInactive 
+    ? sortedItems 
+    : sortedItems.filter(item => item.active !== false);
 
   return (
     <div className="rounded-lg border border-border bg-card">
@@ -188,7 +196,7 @@ export function CategoryEditor({ category, onUpdate, onAutoSave }: CategoryEdito
       {expanded && (
         <div className="p-4">
           <div className="space-y-2">
-            {sortedItems.map((item, index) => (
+            {visibleItems.map((item, index) => (
               <DraggableItem
                 key={item.id}
                 item={item}
