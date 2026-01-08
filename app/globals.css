@@ -187,6 +187,15 @@
   color: #ffffff;
 }
 
+.font-category-description-small {
+  font-family: "Helvetica-Oblique", "Helvetica", sans-serif;
+  font-size: 0.95rem; /* Slightly smaller than 1.125rem */
+  font-style: italic;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  color: #ffffff;
+}
+
 /* Prices: Bold Italic Helvetica */
 .font-price {
   font-family: "Helvetica-Bold Oblique", "Helvetica", sans-serif;

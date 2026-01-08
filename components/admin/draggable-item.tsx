@@ -4,7 +4,7 @@ import type React from "react";
 
 import type { MenuItem } from "@/lib/types";
 import { Button } from "@/components/ui/button";
-import { GripVertical, Pencil, Trash2 } from "lucide-react";
+import { GripVertical, Pencil, Trash2, Eye, EyeOff } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface DraggableItemProps {
@@ -14,8 +14,10 @@ interface DraggableItemProps {
   onDragOver: (e: React.DragEvent) => void;
   onDrop: (e: React.DragEvent, index: number) => void;
   onToggleAvailability: (itemId: string) => void;
+  onToggleActive: (itemId: string) => void;
   onEdit: (item: MenuItem) => void;
   onDelete: (itemId: string) => void;
+  isSaving?: boolean;
 }
 
 export function DraggableItem({
@@ -25,9 +27,13 @@ export function DraggableItem({
   onDragOver,
   onDrop,
   onToggleAvailability,
+  onToggleActive,
   onEdit,
   onDelete,
+  isSaving = false,
 }: DraggableItemProps) {
+  const isActive = item.active !== false; // Default to true
+
   return (
     <div
       draggable
@@ -36,7 +42,8 @@ export function DraggableItem({
       onDrop={(e) => onDrop(e, index)}
       className={cn(
         "flex items-center gap-3 rounded-lg border border-border bg-background p-3 transition-all hover:border-accent/50 hover:bg-accent/5",
-        !item.available && "opacity-60"
+        !item.available && "opacity-60",
+        !isActive && "opacity-40 bg-muted/10 border-dashed"
       )}
     >
       <GripVertical className="h-5 w-5 shrink-0 cursor-grab text-muted active:cursor-grabbing" />
@@ -44,6 +51,11 @@ export function DraggableItem({
       <div className="flex-1">
         <div className="flex items-center gap-2">
           <span className="font-semibold text-foreground">{item.name}</span>
+          {!isActive && (
+             <span className="rounded bg-muted px-1.5 py-0.5 text-xs font-semibold uppercase text-muted-foreground">
+              Hidden
+            </span>
+          )}
           {item.sideNote && (
             <span className="text-xs text-muted">{item.sideNote}</span>
           )}
@@ -71,18 +83,40 @@ export function DraggableItem({
       </div>
 
       <div className="flex items-center gap-2">
-        <Button variant="ghost" size="sm" onClick={() => onEdit(item)}>
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          onClick={() => onToggleActive(item.id)}
+          title={isActive ? "Make Hidden" : "Make Visible"}
+          disabled={isSaving}
+        >
+          {isSaving ? (
+            <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+          ) : isActive ? (
+             <Eye className="h-4 w-4" />
+          ) : (
+             <EyeOff className="h-4 w-4 text-muted-foreground" />
+          )}
+        </Button>
+        <Button variant="ghost" size="sm" onClick={() => onEdit(item)} disabled={isSaving}>
           <Pencil className="h-4 w-4" />
         </Button>
-        <Button variant="ghost" size="sm" onClick={() => onDelete(item.id)}>
+        <Button variant="ghost" size="sm" onClick={() => onDelete(item.id)} disabled={isSaving}>
           <Trash2 className="h-4 w-4 text-destructive" />
         </Button>
         <Button
           variant={item.available ? "outline" : "default"}
           size="sm"
           onClick={() => onToggleAvailability(item.id)}
+          disabled={isSaving}
         >
-          {item.available ? "Available" : "Sold Out"}
+          {isSaving ? (
+             <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+          ) : item.available ? (
+            "Available"
+          ) : (
+            "Sold Out"
+          )}
         </Button>
       </div>
     </div>

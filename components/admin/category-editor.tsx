@@ -13,13 +13,15 @@ import { ItemDialog } from "./item-dialog";
 interface CategoryEditorProps {
   category: MenuCategory;
   onUpdate: (category: MenuCategory) => void;
+  onAutoSave?: (category: MenuCategory) => Promise<void>;
 }
 
-export function CategoryEditor({ category, onUpdate }: CategoryEditorProps) {
+export function CategoryEditor({ category, onUpdate, onAutoSave }: CategoryEditorProps) {
   const [expanded, setExpanded] = useState(false);
   const [items, setItems] = useState(category.items);
   const [editingItem, setEditingItem] = useState<MenuItem | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [savingItemId, setSavingItemId] = useState<string | null>(null);
 
   // Update local state when category prop changes to prevent stale state
   useEffect(() => {
@@ -82,12 +84,36 @@ export function CategoryEditor({ category, onUpdate }: CategoryEditorProps) {
     onUpdate({ ...category, items: updatedItems });
   };
 
-  const toggleAvailability = (itemId: string) => {
+  const toggleAvailability = async (itemId: string) => {
+    setSavingItemId(itemId);
     const updatedItems = items.map((item) =>
       item.id === itemId ? { ...item, available: !item.available } : item
     );
     setItems(updatedItems);
-    onUpdate({ ...category, items: updatedItems });
+    const updatedCategory = { ...category, items: updatedItems };
+    onUpdate(updatedCategory);
+    
+    if (onAutoSave) {
+        await onAutoSave(updatedCategory);
+    }
+    setSavingItemId(null);
+  };
+
+  const toggleActive = async (itemId: string) => {
+    setSavingItemId(itemId);
+    const updatedItems = items.map((item) =>
+      item.id === itemId
+        ? { ...item, active: item.active === false ? true : false }
+        : item
+    );
+    setItems(updatedItems);
+    const updatedCategory = { ...category, items: updatedItems };
+    onUpdate(updatedCategory);
+
+    if (onAutoSave) {
+        await onAutoSave(updatedCategory);
+    }
+    setSavingItemId(null);
   };
 
   const handleEditItem = (item: MenuItem) => {
@@ -171,8 +197,10 @@ export function CategoryEditor({ category, onUpdate }: CategoryEditorProps) {
                 onDragOver={handleDragOver}
                 onDrop={handleDrop}
                 onToggleAvailability={toggleAvailability}
+                onToggleActive={toggleActive}
                 onEdit={handleEditItem}
                 onDelete={handleDeleteItem}
+                isSaving={savingItemId === item.id}
               />
             ))}
           </div>

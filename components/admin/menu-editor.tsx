@@ -55,6 +55,30 @@ export function MenuEditor({
       prev.map((cat) => (cat.id === updatedCategory.id ? updatedCategory : cat))
     );
   };
+  
+  const handleAutoSave = async (updatedCategory: MenuCategory) => {
+    // Optimistically update local state first
+    const updatedCategories = categories.map((cat) => 
+      cat.id === updatedCategory.id ? updatedCategory : cat
+    );
+    setCategories(updatedCategories);
+    
+    // Perform background save
+    try {
+      await saveMenuData({
+        categories: updatedCategories,
+        lastUpdated: new Date().toISOString(),
+      });
+      // Optional: Silent success or subtle indicator
+    } catch (error) {
+      console.error("[v0] Auto-save error:", error);
+      onShowNotification?.(
+        "error",
+        "Auto-Save Failed",
+        "Failed to save changes automatically."
+      );
+    }
+  };
 
   const sortedCategories = sortByOrder(categories);
 
@@ -72,6 +96,7 @@ export function MenuEditor({
             key={category.id}
             category={category}
             onUpdate={handleCategoryUpdate}
+            onAutoSave={handleAutoSave}
           />
         ))}
       </div>

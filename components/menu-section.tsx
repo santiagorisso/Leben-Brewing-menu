@@ -7,7 +7,7 @@ interface MenuSectionProps {
 }
 
 export function MenuSection({ category }: MenuSectionProps) {
-  const sortedItems = sortByOrder(category.items);
+  const sortedItems = sortByOrder(category.items).filter(item => item.active !== false);
   // Identifiers for specific layout logic
   const isBeersCategory =
     category.slug === "cervezas" || category.slug === "beers";
@@ -66,12 +66,14 @@ export function MenuSection({ category }: MenuSectionProps) {
 
   return (
     <section
-      id={category.slug}
       // Vertical spacing: Para Picar often needs more space, others standard
       className={`${isParaPicar ? "space-y-10" : "space-y-6"} ${
         isVinos ? "bg-black text-white" : ""
-      } scroll-mt-24 pb-8 border-b-2 border-white/10 last:border-0`}
+      } scroll-mt-24 pb-8 relative`}
     >
+      {/* Decorative Divider (Top) - applied to all except first if needed, but typical menu has dividers between sections. 
+          The existing code had border-bottom. I will replace it with a dedicated element at the bottom of the content.
+      */}
       <div className="text-center animate-fade-in-up">
         {/* Category Title: Margins are handled by .font-category-title in globals.css */}
         <h2
@@ -82,9 +84,13 @@ export function MenuSection({ category }: MenuSectionProps) {
           {category.name}
         </h2>
         
-        {category.description && (
+      {category.description && (
           <p
-            className={`mx-auto max-w-2xl font-category-description ${
+            className={`mx-auto max-w-2xl ${
+              category.slug === "empanadas"
+                ? "font-category-description-small"
+                : "font-category-description"
+            } ${
               isParaPicar ? "mt-4 pb-4" : ""
             } ${getStyleClasses(category.descriptionStyle)}`}
             dangerouslySetInnerHTML={{ __html: processDescription(category.description) }}
@@ -201,6 +207,10 @@ export function MenuSection({ category }: MenuSectionProps) {
           })}
         </div>
       )}
+      {/* Section Divider - visual separator */}
+      <div className="absolute bottom-0 left-0 right-0 flex justify-center items-center py-4">
+        <div className="w-full h-px bg-[#ffffff] opacity-30 max-w-5xl mx-auto" />
+      </div>
     </section>
   );
 }

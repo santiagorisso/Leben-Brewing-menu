@@ -15,6 +15,7 @@ export interface MenuItem {
   glassPrice?: number; // For wines
   bottlePrice?: number; // For wines
   wineType?: "Tinto" | "Blanco"; // For wines - red or white
+  active?: boolean; // Controls public visibility
   available: boolean;
   vegetarian?: boolean;
   ibu?: number; // For beers

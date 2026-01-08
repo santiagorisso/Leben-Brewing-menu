@@ -32,9 +32,9 @@ export function MenuItem({ item, categorySlug }: MenuItemProps) {
           <Image
             src="/images/soldout.png"
             alt="Sold Out"
-            width={120}
-            height={60}
-            className="opacity-80 rotate-[-15deg]"
+            width={240}
+            height={120}
+            className="opacity-80 rotate-[-15deg] w-[180px] md:w-[240px] h-auto"
           />
         </div>
       )}

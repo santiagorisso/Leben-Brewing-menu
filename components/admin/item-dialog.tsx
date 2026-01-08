@@ -336,7 +336,20 @@ export function ItemDialog({
               }
             />
             <Label htmlFor="available" className="cursor-pointer">
-              Available
+              Available (Sold Out overlay if unchecked)
+            </Label>
+          </div>
+
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              id="active"
+              checked={formData.active !== false} // Default to true if undefined
+              onCheckedChange={(checked) =>
+                setFormData({ ...formData, active: checked as boolean })
+              }
+            />
+            <Label htmlFor="active" className="cursor-pointer">
+              Active (Visible in public menu)
             </Label>
           </div>
 
