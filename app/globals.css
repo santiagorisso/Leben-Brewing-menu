@@ -170,7 +170,7 @@
 /* Descriptions: Italic Helvetica */
 .font-item-description {
   font-family: "Helvetica-Oblique", "Helvetica", sans-serif;
-  font-size: 0.875rem; /* ~14px */
+  font-size: 0.9375rem; /* 15px (+1px from 14px) */
   font-style: italic;
   line-height: 1.4;
   letter-spacing: 0.01em;
@@ -226,6 +226,16 @@
   font-size: 1rem;
   font-style: italic;
   letter-spacing: 0.01em;
+}
+
+/* Side Note: Matches title style but distinct */
+.font-side-note {
+  font-family: "Knockout-FullLiteweight", "Impact", sans-serif;
+  font-size: 1.5rem; /* ~24px */
+  text-transform: uppercase;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  font-weight: 400;
 }
 
 /* Infinite Text Slider Styles */

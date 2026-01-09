@@ -62,6 +62,7 @@ export const mockMenuData: MenuData = {
           available: true,
           active: true,
           vegetarian: true,
+          subcategoryId: "pizzas-a-la-piedra",
           order: "a0",
         },
         {
@@ -71,6 +72,7 @@ export const mockMenuData: MenuData = {
           price: 18,
           available: true,
           active: true,
+          subcategoryId: "pizzas-a-la-piedra",
           order: "a1",
         },
         {
@@ -81,6 +83,7 @@ export const mockMenuData: MenuData = {
           available: true,
           active: true,
           vegetarian: true,
+          subcategoryId: "pizzas-a-la-piedra",
           order: "a2",
         },
       ],

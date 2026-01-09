@@ -15,6 +15,7 @@ export function MenuSection({ category }: MenuSectionProps) {
     category.slug === "tragos" || category.slug === "drinks" || category.slug === "cocktails";
   const isVinos = category.slug === "vinos" || category.slug === "wines";
   const isParaPicar = category.slug === "para-picar";
+  const isPizzas = category.slug === "pizzas";
 
   const sortedSubcategories = category.subcategories
     ? sortByOrder(category.subcategories)
@@ -66,7 +67,6 @@ export function MenuSection({ category }: MenuSectionProps) {
 
   return (
     <section
-      // Vertical spacing: Para Picar often needs more space, others standard
       className={`${isParaPicar ? "space-y-10" : "space-y-6"} ${
         isVinos ? "bg-black text-white" : ""
       } scroll-mt-24 pb-8 relative`}
@@ -111,7 +111,7 @@ export function MenuSection({ category }: MenuSectionProps) {
                 className={`${shouldCenterLastItem ? "md:col-span-2 md:mx-auto md:max-w-md" : ""} animate-fade-in-up`}
                 style={{ animationDelay: `${index * 50}ms`, animationFillMode: 'both' }}
               >
-                <MenuItem item={item} categorySlug={category.slug} />
+                <MenuItem item={item} categorySlug={category.slug} spacingMode="compact" />
               </div>
             );
           })}
@@ -129,7 +129,7 @@ export function MenuSection({ category }: MenuSectionProps) {
                 className={`${shouldCenterLastItem ? "md:col-span-2 md:mx-auto md:max-w-md" : ""} h-full flex items-center justify-center animate-fade-in-up`}
                 style={{ animationDelay: `${index * 50}ms`, animationFillMode: 'both' }}
               >
-                <MenuItem item={item} categorySlug={category.slug} />
+                <MenuItem item={item} categorySlug={category.slug} spacingMode="compact" />
               </div>
             );
           })}
@@ -139,14 +139,18 @@ export function MenuSection({ category }: MenuSectionProps) {
         <div className="flex flex-col items-center">
           {/* Items without subcategory */}
           {itemsWithoutSubcategory.length > 0 && (
-            <div className="w-full max-w-2xl space-y-0">
+            <div className={`w-full max-w-2xl space-y-0`}>
               {itemsWithoutSubcategory.map((item, index) => (
                 <div 
                   key={item.id} 
                   className="relative animate-fade-in-up" 
                   style={{ animationDelay: `${index * 50}ms`, animationFillMode: 'both' }}
                 >
-                  <MenuItem item={item} categorySlug={category.slug} />
+                  <MenuItem 
+                    item={item} 
+                    categorySlug={category.slug} 
+                    spacingMode={isParaPicar || isPizzas ? "expanded" : "compact"}
+                  />
                   {/* Divider for beers: thin white line */}
                   {isBeersCategory &&
                     index < itemsWithoutSubcategory.length - 1 && (
@@ -193,7 +197,11 @@ export function MenuSection({ category }: MenuSectionProps) {
                       className="relative animate-fade-in-up"
                       style={{ animationDelay: `${(index + 2) * 50}ms`, animationFillMode: 'both' }}
                     >
-                      <MenuItem item={item} categorySlug={category.slug} />
+                      <MenuItem 
+                        item={item} 
+                        categorySlug={category.slug} 
+                        spacingMode={isParaPicar || isPizzas ? "expanded" : "compact"}
+                      />
                       {/* Divider for beers within subcategories */}
                       {isBeersCategory &&
                         index < subcategoryItems.length - 1 && (

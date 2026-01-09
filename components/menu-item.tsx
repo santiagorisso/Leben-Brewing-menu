@@ -4,9 +4,10 @@ import Image from "next/image";
 interface MenuItemProps {
   item: MenuItemType;
   categorySlug: string;
+  spacingMode?: "compact" | "expanded";
 }
 
-export function MenuItem({ item, categorySlug }: MenuItemProps) {
+export function MenuItem({ item, categorySlug, spacingMode = "compact" }: MenuItemProps) {
   // Use slug matching for category-specific logic
   const isBeer = categorySlug.includes("cervezas") || categorySlug.includes("beers");
   const isWine = categorySlug.includes("vinos") || categorySlug.includes("wines");
@@ -24,8 +25,12 @@ export function MenuItem({ item, categorySlug }: MenuItemProps) {
     return classes.join(" ");
   };
 
+  const containerPadding = spacingMode === "expanded" ? "py-3" : "py-2";
+  const internalSpacing = spacingMode === "expanded" ? "space-y-2" : "space-y-1";
+  const priceMargin = spacingMode === "expanded" ? "mt-2" : "mt-1";
+
   return (
-    <div className="relative py-2 text-center">
+    <div className={`relative ${containerPadding} text-center`}>
       {/* Sold Out Overlay */}
       {!item.available && (
         <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
@@ -39,7 +44,7 @@ export function MenuItem({ item, categorySlug }: MenuItemProps) {
         </div>
       )}
 
-      <div className={`flex flex-col items-center justify-center space-y-1`}>
+      <div className={`flex flex-col items-center justify-center ${internalSpacing}`}>
         {/* Wine Type (only for wines) */}
         {isWine && item.wineType && (
           <span className={`font-wine-type ${textColor}`}>
@@ -48,7 +53,7 @@ export function MenuItem({ item, categorySlug }: MenuItemProps) {
         )}
 
         {/* Item Name + Veggie Icon */}
-        <div className="flex items-center justify-center gap-2 leading-none">
+        <div className="flex items-baseline justify-center gap-2 leading-none">
           <h3
             className={`
               ${isWine ? "font-wine-title" : "font-item-title"}
@@ -101,7 +106,7 @@ export function MenuItem({ item, categorySlug }: MenuItemProps) {
         )}
 
         {/* Price */}
-        <div className="mt-1">
+        <div className={priceMargin}>
           {isWine && item.glassPrice && item.bottlePrice ? (
             <div className="flex flex-col items-center gap-0">
               <span className={`font-price ${textColor}`}>
